@@ -47,7 +47,9 @@ class DataSeries(_Base):
     label: str
     color: str
     dates: List[str]
-    values: List[float]
+    # Optional: a ticker with a later IPO can still have leading NaNs inside the
+    # common df index in rare reindex edge cases; renderer should treat null as "no data yet".
+    values: List[Optional[float]]
 
 
 class CameraKeyframeOut(_Base):

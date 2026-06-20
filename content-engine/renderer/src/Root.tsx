@@ -14,10 +14,9 @@ import sampleScenePlan from '../sample-scene-plan.json';
 const calculateMetadata: CalculateMetadataFunction<
   ScenePlanCompositionProps
 > = ({props}) => {
-  const {scenePlan} = props;
   return {
-    durationInFrames: scenePlan.duration.total_frames,
-    fps: scenePlan.fps,
+    durationInFrames: props.duration.total_frames,
+    fps: props.fps,
     width: 1920,
     height: 1080,
   };
@@ -32,9 +31,7 @@ export const RemotionRoot: React.FC = () => {
       fps={(sampleScenePlan as ScenePlan).fps}
       width={1920}
       height={1080}
-      defaultProps={{
-        scenePlan: sampleScenePlan as ScenePlan,
-      }}
+      defaultProps={sampleScenePlan as ScenePlanCompositionProps}
       calculateMetadata={calculateMetadata}
     />
   );

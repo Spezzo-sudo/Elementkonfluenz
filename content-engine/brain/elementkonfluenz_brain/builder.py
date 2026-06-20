@@ -81,7 +81,7 @@ def build_scene_plan(topic_brief: dict, theme: dict, hook_variant: dict) -> Scen
     mode: str = topic_brief.get("mode", "evergreen")
     raw_events = topic_brief.get("events", [])
 
-    end_date = pd.Timestamp.utcnow().tz_localize(None).normalize()
+    end_date = pd.Timestamp.now(tz="UTC").tz_localize(None).normalize()
     start_date = end_date - pd.Timedelta(days=period_days)
 
     # 1. Data

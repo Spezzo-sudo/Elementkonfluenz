@@ -151,14 +151,13 @@ export interface ScenePlan {
 }
 
 /**
- * Props passed into the root <ScenePlanComposition>. The renderer receives
- * the ScenePlan inline (preferred — Remotion serializes input props as
- * JSON, so passing the whole plan via --props is the natural path) plus an
- * optional path, kept for compatibility with tooling that prefers passing a
- * file path instead of inlining the (potentially large) document.
+ * Props passed into the root <ScenePlanComposition>. The Brain CLI writes
+ * the ScenePlan document to disk as-is (top-level fields, no wrapper key),
+ * so `--props=scene_plan.json` must deep-merge directly onto these props —
+ * wrapping it under a `scenePlan` key would mean the merge never touches
+ * the real fields and the sample defaultProps gets rendered instead.
  */
-export interface ScenePlanCompositionProps {
-  scenePlan: ScenePlan;
+export interface ScenePlanCompositionProps extends ScenePlan {
   // Index signature required to satisfy Remotion's `Record<string, unknown>`
   // constraint on composition props; does not change the contract shape.
   [key: string]: unknown;

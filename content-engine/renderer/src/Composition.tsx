@@ -12,9 +12,9 @@ import {IntroPhase} from './components/IntroPhase';
  * phase-component to paint purely based on `duration.phases` frame ranges
  * that the Brain already computed.
  */
-export const ScenePlanComposition: React.FC<ScenePlanCompositionProps> = ({
+export const ScenePlanComposition: React.FC<ScenePlanCompositionProps> = (
   scenePlan,
-}) => {
+) => {
   const frame = useCurrentFrame();
   const {phases} = scenePlan.duration;
   const {theme} = scenePlan;
