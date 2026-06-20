@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "video_id": "sample-001",
+  "topic": {
+    "assets": ["BTC-USD", "GC=F"],
+    "period_days": 4,
+    "locale": "de"
+  },
+  "fps": 30,
+  "duration": {
+    "total_frames": 90,
+    "total_duration_sec": 3.0,
+    "phases": {
+      "intro": {"start_frame": 0, "end_frame": 15},
+      "race": {"start_frame": 15, "end_frame": 65},
+      "final_hold": {"start_frame": 65, "end_frame": 75},
+      "endscreen": {"start_frame": 75, "end_frame": 90}
+    }
+  },
+  "data_series": [
+    {
+      "ticker": "BTC-USD",
+      "label": "Bitcoin",
+      "color": "#F7931A",
+      "dates": ["2021-01-01", "2021-01-02", "2021-01-03", "2021-01-04", "2021-01-05"],
+      "values": [1000.0, 1450.0, 1300.0, 2100.0, 5400.0]
+    },
+    {
+      "ticker": "GC=F",
+      "label": "Gold",
+      "color": "#D4AF37",
+      "dates": ["2021-01-01", "2021-01-02", "2021-01-03", "2021-01-04", "2021-01-05"],
+      "values": [1800.0, 1820.0, 1790.0, 1850.0, 1900.0]
+    }
+  ],
+  "camera": {
+    "policy": "stock_value",
+    "keyframes": [
+      {"frame": 15, "x_min": 0, "x_max": 1, "y_min": 0, "y_max": 2000},
+      {"frame": 40, "x_min": 0, "x_max": 3, "y_min": 0, "y_max": 2200},
+      {"frame": 65, "x_min": 0, "x_max": 4, "y_min": 0, "y_max": 5500}
+    ]
+  },
+  "time_map": {
+    "enabled": true,
+    "control_points": [
+      {"frame": 15, "data_index": 0.0},
+      {"frame": 65, "data_index": 4.0}
+    ]
+  },
+  "events": [
+    {
+      "frame_start": 35,
+      "frame_end": 50,
+      "ticker": "BTC-USD",
+      "type": "ath_record",
+      "label": "Neues Rekordhoch",
+      "style_ref": "ath_record"
+    }
+  ],
+  "theme": {
+    "id": "sample-dark",
+    "colors": {
+      "bg": {"primary": "#0b0f1a"},
+      "text": {"primary": "#ffffff", "secondary": "#a3a3a3"},
+      "accent": {"primary": "#38bdf8", "positive": "#22c55e", "negative": "#ef4444"}
+    },
+    "font_family": "Arial, sans-serif",
+    "glow_mode": "subtle",
+    "event_styles": {
+      "ath_record": {"color": "#22c55e", "pulse": true}
+    }
+  },
+  "hook_variant": {"id": "sample-hook"},
+  "endscreen": {
+    "final_values": [
+      {"ticker": "BTC-USD", "value": 5400.0, "gain_pct": 440.0},
+      {"ticker": "GC=F", "value": 1900.0, "gain_pct": 5.6}
+    ],
+    "thumbnail_source_frame": 65
+  },
+  "qa": {
+    "hard_fail": false,
+    "results": [
+      {"check": "event_overlap", "passed": true, "detail": "no overlap with final_hold/endscreen"}
+    ]
+  }
+}
