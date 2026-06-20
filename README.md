@@ -13,4 +13,7 @@ Automatisierte Pipeline, die täglich datengetriebene Short-Videos (Bar/Line-Rac
 
 ## Status
 
-Konzeptphase — noch kein Code. Architektur und Modulgrenzen siehe oben, Details in den jeweiligen README-Dateien der Module.
+Phase 1 (content-engine Kern) steht: Brain (Python, portierte Entscheidungslogik) und Renderer
+(Remotion) sind end-to-end verifiziert — ein live generierter `ScenePlan` rendert ruckelfrei mit
+korrekter eigener Länge. trend-engine, seo-engine und distribution sind noch Konzeptphase, Details
+in den jeweiligen README-Dateien der Module.
