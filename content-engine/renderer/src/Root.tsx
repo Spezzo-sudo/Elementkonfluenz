@@ -1,7 +1,7 @@
 import React from 'react';
-import {Composition} from 'remotion';
+import {Composition, type CalculateMetadataFunction} from 'remotion';
 import {ScenePlanComposition} from './Composition';
-import type {ScenePlan} from './sceneplan/types';
+import type {ScenePlan, ScenePlanCompositionProps} from './sceneplan/types';
 import sampleScenePlan from '../sample-scene-plan.json';
 
 /**
@@ -11,11 +11,9 @@ import sampleScenePlan from '../sample-scene-plan.json';
  * mechanism requested by the contract: width/height are fixed render
  * targets, but frames/fps come from the loaded ScenePlan.
  */
-const calculateMetadata = ({
-  props,
-}: {
-  props: {scenePlan: ScenePlan};
-}) => {
+const calculateMetadata: CalculateMetadataFunction<
+  ScenePlanCompositionProps
+> = ({props}) => {
   const {scenePlan} = props;
   return {
     durationInFrames: scenePlan.duration.total_frames,

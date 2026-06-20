@@ -159,4 +159,7 @@ export interface ScenePlan {
  */
 export interface ScenePlanCompositionProps {
   scenePlan: ScenePlan;
+  // Index signature required to satisfy Remotion's `Record<string, unknown>`
+  // constraint on composition props; does not change the contract shape.
+  [key: string]: unknown;
 }

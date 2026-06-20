@@ -17,11 +17,22 @@ export const IntroPhase: React.FC<IntroPhaseProps> = ({scenePlan}) => {
   const {theme, topic, duration} = scenePlan;
   const introEnd = duration.phases.intro.end_frame;
 
-  const opacity = interpolate(frame, [0, 12, introEnd - 8, introEnd], [0, 1, 1, 0], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
-  const scale = interpolate(frame, [0, 15], [0.85, 1], {
+  // Fade-in/out edge widths shrink for very short intro phases so the
+  // input range to interpolate() always stays strictly increasing.
+  const fadeIn = Math.max(1, Math.min(12, Math.floor(introEnd / 3)));
+  const fadeOut = Math.max(1, Math.min(8, Math.floor(introEnd / 4)));
+  const fadeOutStart = Math.max(fadeIn, introEnd - fadeOut);
+
+  const opacity = interpolate(
+    frame,
+    [0, fadeIn, fadeOutStart, introEnd],
+    [0, 1, 1, 0],
+    {
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+    },
+  );
+  const scale = interpolate(frame, [0, Math.max(1, fadeIn)], [0.85, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
