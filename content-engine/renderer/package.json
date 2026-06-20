@@ -1,0 +1,24 @@
+{
+  "name": "content-engine-renderer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion renderer that paints frames from a ScenePlan JSON document. Zero business logic — pure pixel painting.",
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "render": "remotion render src/index.ts ScenePlan out/output.mp4",
+    "still": "remotion still",
+    "upgrade": "remotion upgrade",
+    "typecheck": "tsc -noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.481",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.481"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.8.2"
+  }
+}
