@@ -1,0 +1,11 @@
+[Unit]
+Description=Run ValueRacer safe dry-run loop three times per week
+
+[Timer]
+# Monday, Wednesday, Friday at 06:00 server time.
+OnCalendar=Mon,Wed,Fri 06:00:00
+Persistent=true
+Unit=valueracer-dry-run.service
+
+[Install]
+WantedBy=timers.target

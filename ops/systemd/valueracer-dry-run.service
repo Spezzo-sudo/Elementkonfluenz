@@ -1,0 +1,23 @@
+[Unit]
+Description=ValueRacer safe dry-run loop
+Documentation=README:/srv/valueracer/ops/HERMES_VPS_RUNNER.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/srv/valueracer
+Environment=VALUERACER_ROOT=/srv/valueracer
+Environment=VALUERACER_RUNS_DIR=/srv/valueracer/runs
+Environment=VALUERACER_LOGS_DIR=/srv/valueracer/logs
+Environment=VALUERACER_DRY_RUN=true
+ExecStart=/usr/bin/env bash /srv/valueracer/ops/hermes_valueracer_dry_run.sh
+
+# Safety hardening. Keep conservative because local Python packages need read access to the repo.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ReadWritePaths=/srv/valueracer/runs /srv/valueracer/logs
+
+[Install]
+WantedBy=multi-user.target

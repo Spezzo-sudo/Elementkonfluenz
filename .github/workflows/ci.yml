@@ -331,6 +331,30 @@ jobs:
           assert job['ready_to_publish'] is False
           PY
 
+  ops-runner-template-smoke-test:
+    name: Ops runner templates smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate shell runner syntax
+        run: bash -n ops/hermes_valueracer_dry_run.sh
+
+      - name: Verify ops templates exist
+        run: |
+          test -f ops/HERMES_VPS_RUNNER.md
+          test -f ops/hermes_valueracer_dry_run.sh
+          test -f ops/systemd/valueracer-dry-run.service
+          test -f ops/systemd/valueracer-dry-run.timer
+          test -f ops/cron/valueracer-dry-run.cron
+
+      - name: Verify runner remains dry-run gated
+        run: |
+          grep -q -- '--dry-run' ops/hermes_valueracer_dry_run.sh
+          grep -q -- '--with-qa' ops/hermes_valueracer_dry_run.sh
+          grep -q 'VALUERACER_DRY_RUN' ops/hermes_valueracer_dry_run.sh
+
   renderer-typecheck:
     name: Remotion renderer typecheck
     runs-on: ubuntu-latest
