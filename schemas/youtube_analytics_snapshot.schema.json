@@ -1,0 +1,49 @@
+{
+  "title": "Elementkonfluenz YouTube Analytics Snapshot",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "platform",
+    "job_id",
+    "video_id",
+    "retrieved_at",
+    "window",
+    "metrics",
+    "warnings"
+  ],
+  "properties": {
+    "contract_version": {"type": "string", "default": "0.1"},
+    "platform": {"type": "string", "const": "youtube"},
+    "job_id": {"type": "string", "minLength": 1},
+    "video_id": {"type": "string", "minLength": 1},
+    "retrieved_at": {"type": "string"},
+    "window": {
+      "type": "object",
+      "required": ["start_date", "end_date"],
+      "properties": {
+        "start_date": {"type": "string"},
+        "end_date": {"type": "string"},
+        "label": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "views": {"type": ["number", "null"]},
+        "likes": {"type": ["number", "null"]},
+        "estimated_minutes_watched": {"type": ["number", "null"]},
+        "average_view_duration": {"type": ["number", "null"]},
+        "average_view_percentage": {"type": ["number", "null"]},
+        "subscribers_gained": {"type": ["number", "null"]}
+      },
+      "additionalProperties": true
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
