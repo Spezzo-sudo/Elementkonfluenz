@@ -40,7 +40,7 @@ jobs:
         run: python -m elementkonfluenz_brain.cli --help
 
   orchestrator-smoke-test:
-    name: Orchestrator dry-run smoke test
+    name: ValueRacer orchestrator dry-run smoke test
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -60,10 +60,10 @@ jobs:
         run: python -m pip install -e .
 
       - name: CLI help smoke test
-        run: python -m elementkonfluenz_orchestrator.cli --help
+        run: python -m valueracer_orchestrator.cli --help
 
       - name: Create dry-run job
-        run: python -m elementkonfluenz_orchestrator.cli --dry-run --topic "Gold vs S&P 500" --out ../runs/ci-dry-run
+        run: python -m valueracer_orchestrator.cli --dry-run --topic "Gold vs S&P 500" --out ../runs/ci-dry-run
 
       - name: Verify dry-run artifacts
         run: |
