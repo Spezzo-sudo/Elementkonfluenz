@@ -1,4 +1,4 @@
-"""CLI entry point for the Hermes-compatible dry-run orchestrator."""
+"""CLI entry point for the Hermes-compatible ValueRacer dry-run orchestrator."""
 
 from __future__ import annotations
 
@@ -12,8 +12,8 @@ from .job import create_dry_run_job, default_job_id
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="elementkonfluenz_orchestrator.cli",
-        description="Create a Hermes-compatible Elementkonfluenz dry-run job folder.",
+        prog="valueracer_orchestrator.cli",
+        description="Create a Hermes-compatible ValueRacer dry-run job folder.",
     )
     parser.add_argument("--topic", required=True, help="Human-readable topic title, e.g. 'Gold vs S&P 500'.")
     parser.add_argument("--out", required=False, help="Output run directory. Defaults to runs/<generated-job-id>.")
