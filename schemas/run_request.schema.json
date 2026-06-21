@@ -1,0 +1,36 @@
+{
+  "title": "ValueRacer Run Request",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "run_mode",
+    "dry_run",
+    "requires_review"
+  ],
+  "properties": {
+    "contract_version": {"type": "string", "default": "0.1"},
+    "run_mode": {
+      "type": "string",
+      "enum": ["manual_topic", "market_scan", "trend_scan", "rerun_failed"]
+    },
+    "dry_run": {"type": "boolean", "default": true},
+    "job_id": {"type": "string"},
+    "topic": {"type": "string"},
+    "platforms": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["youtube", "tiktok", "instagram", "x"]},
+      "default": ["youtube"]
+    },
+    "video_types_allowed": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["market_race", "trend_explainer", "macro_snapshot"]}
+    },
+    "cooldown_days": {"type": "integer", "minimum": 0, "default": 14},
+    "asset_pair_cooldown_days": {"type": "integer", "minimum": 0, "default": 21},
+    "max_same_video_type_in_row": {"type": "integer", "minimum": 1, "default": 2},
+    "max_same_template_in_row": {"type": "integer", "minimum": 1, "default": 2},
+    "requires_review": {"type": "boolean", "default": true},
+    "ready_to_publish": {"type": "boolean", "default": false}
+  },
+  "additionalProperties": true
+}

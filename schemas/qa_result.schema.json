@@ -1,0 +1,39 @@
+{
+  "title": "ValueRacer QA Result",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "job_id",
+    "ok",
+    "hard_fail",
+    "requires_review",
+    "ready_to_publish",
+    "checks"
+  ],
+  "properties": {
+    "contract_version": {"type": "string", "default": "0.1"},
+    "job_id": {"type": "string", "minLength": 1},
+    "ok": {"type": "boolean"},
+    "hard_fail": {"type": "boolean", "default": false},
+    "requires_review": {"type": "boolean", "default": true},
+    "ready_to_publish": {"type": "boolean", "default": false},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status"],
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["pass", "warn", "fail", "skipped"]},
+          "error_code": {"type": "string"},
+          "message": {"type": "string"},
+          "details": {"type": "object", "additionalProperties": true}
+        },
+        "additionalProperties": true
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "error_codes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

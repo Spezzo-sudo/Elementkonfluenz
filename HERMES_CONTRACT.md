@@ -23,6 +23,83 @@ Der alte Name kann noch in historischen Commits, offenen PRs oder internen Pytho
 7. Bestehende VPS-Daten werden niemals ungefragt ueberschrieben oder geloescht.
 8. Bestehende Hermes-Secrets und `.env`-Dateien werden gelesen, aber nicht automatisch neu erzeugt, rotiert oder ueberschrieben.
 
+## Aktueller sicherer Dry-Run
+
+Der aktuell implementierte sichere Hermes-Loop ist:
+
+```bash
+python -m valueracer_orchestrator.cli \
+  --dry-run \
+  --with-youtube-seo \
+  --topic "Gold vs S&P 500" \
+  --out runs/<job_id>
+```
+
+Dieser Loop erzeugt:
+
+```text
+topic_brief.json
+sources.json
+metadata/youtube.json
+publish/youtube_publish_plan.json
+job_result.json
+logs/orchestrator.log
+```
+
+Er postet nichts, liest keine Secrets und setzt `ready_to_publish` nicht auf true.
+
+## Run Modes
+
+Die konkreten Betriebsarten sind in `orchestration/RUN_MODES.md` definiert.
+
+Aktuelle und geplante Modi:
+
+```text
+manual_topic  -> Nutzer/Hermes gibt Thema vor
+market_scan   -> ValueRacer waehlt aus Markt-/Asset-Katalog
+trend_scan    -> ValueRacer waehlt aus Trend-/Nachfrage-Signalen
+rerun_failed  -> Hermes wiederholt technische Fehler, wenn retryable=true
+```
+
+Nur `manual_topic` ist aktuell als Dry-Run implementiert. `market_scan` und `trend_scan` sind definierte naechste Ausbaustufen.
+
+## QA Gates
+
+Die Qualitaetsregeln sind in `orchestration/QA_GATES.md` definiert.
+
+Hermes muss spaeter `qa.json` auswerten, sobald die QA Engine implementiert ist.
+
+Minimum-Regel:
+
+```text
+qa.hard_fail == true  -> niemals publishen
+requires_review=true  -> Review melden
+ready_to_publish=false -> nicht publishen
+```
+
+## Rotation und Cooldown
+
+Wiederholungs- und Abwechslungsregeln sind in `orchestration/ROTATION_AND_COOLDOWN.md` definiert.
+
+Ziel:
+
+- keine doppelte Story innerhalb des Cooldowns
+- keine gleiche Asset-Kombination zu oft
+- nicht immer derselbe Video-Typ
+- nicht immer dieselbe Hook-Struktur
+
+## VPS-Schnittstelle
+
+Die Verbindung zwischen bestehendem VPS/Hermes und diesem Repository ist in `orchestration/HERMES_VPS_INTERFACE.md` definiert.
+
+Wichtig:
+
+- vorhandenes VPS-Projekt `ValueRacer` nicht blind ueberschreiben
+- zuerst inventarisieren
+- Backups anlegen
+- parallel testen
+- erst danach verbinden
+
 ## Ziel-Pipeline
 
 ```text
@@ -51,10 +128,9 @@ python -m elementkonfluenz_brain.cli \
 cd content-engine/renderer
 npm run render -- --props=../../runs/<job_id>/scene_plan.json
 
-python -m seo_engine.cli \
-  --scene-plan runs/<job_id>/scene_plan.json \
-  --sources runs/<job_id>/sources.json \
-  --out-dir runs/<job_id>/metadata
+python -m valueracer_seo.cli \
+  --dry-run \
+  --run-dir runs/<job_id>
 
 python -m distribution.cli \
   --run-dir runs/<job_id> \
