@@ -2,7 +2,15 @@
 
 Stand: 2026-06-21
 
-Dieses Dokument definiert, wie ein bestehendes VPS-Projekt spaeter vorsichtig durch Elementkonfluenz ersetzt oder erweitert wird, ohne Datenverlust, ohne Secret-Leaks und ohne unkontrolliertes Auto-Posting.
+Dieses Dokument definiert, wie ein bestehendes VPS-Projekt spaeter vorsichtig durch **ValueRacer** ersetzt oder erweitert wird, ohne Datenverlust, ohne Secret-Leaks und ohne unkontrolliertes Auto-Posting.
+
+## Naming
+
+- Produktname: `ValueRacer`
+- Empfohlener VPS-Zielpfad: `/srv/valueracer`
+- Alter Arbeitsname: `Elementkonfluenz`
+
+Der alte Name kann noch in historischen Commits, offenen PRs oder internen Paketnamen vorkommen. Das GitHub-Repository selbst muss separat in GitHub umbenannt werden, wenn der Repository-Name ebenfalls `ValueRacer` werden soll.
 
 ## Grundsatz
 
@@ -20,6 +28,7 @@ backup first -> deploy parallel -> dry-run -> compare -> review -> switch gradua
 - Kein automatisches Posten, bevor Dry-Runs stabil sind.
 - Kein Entfernen des alten Projekts, bevor Rollback getestet wurde.
 - Keine Secrets im Git-Repo.
+- Kein blindes Umbenennen produktiver VPS-Pfade ohne Symlink-/Rollback-Plan.
 
 ## Phase 1: Inventarisierung
 
@@ -36,6 +45,7 @@ Zu erfassen:
 - Log-Ordner
 - genutzte API-Integrationen
 - aktive Posting-Ziele
+- vorhandene Hermes-Umgebungsvariablen
 
 Ergebnisdatei auf dem VPS, nicht zwingend im Git-Repo:
 
@@ -55,7 +65,7 @@ Vor Veraenderungen:
 Empfohlene Backup-Struktur:
 
 ```text
-/backups/elementkonfluenz-migration/<date>/
+/backups/valueracer-migration/<date>/
 ├── project.tar.gz
 ├── data.tar.gz
 ├── runs.tar.gz
@@ -65,20 +75,26 @@ Empfohlene Backup-Struktur:
 
 ## Phase 3: Parallel-Deployment
 
-Elementkonfluenz wird zuerst parallel installiert, nicht ueber das alte Projekt gelegt.
+ValueRacer wird zuerst parallel installiert, nicht ueber das alte Projekt gelegt.
 
 Beispiel:
 
 ```text
 /srv/old-content-project/        # bestehendes System, bleibt unangetastet
-/srv/elementkonfluenz/           # neues System
-/srv/elementkonfluenz/runs/      # neue Runs
-/srv/elementkonfluenz/logs/      # neue Logs
+/srv/valueracer/                 # neues System
+/srv/valueracer/runs/            # neue Runs
+/srv/valueracer/logs/            # neue Logs
+```
+
+Falls Hermes bereits Pfade unter altem Namen erwartet, wird zuerst ein Symlink oder eine explizite ENV-Umstellung geplant, nicht spontan geloescht:
+
+```text
+/srv/elementkonfluenz -> /srv/valueracer   # nur falls noetig und bewusst gesetzt
 ```
 
 ## Phase 4: Dry-Run
 
-Hermes startet Elementkonfluenz zuerst nur im Dry-Run.
+Hermes startet ValueRacer zuerst nur im Dry-Run.
 
 Dry-Run darf:
 
@@ -153,6 +169,13 @@ Rollback-Checkliste:
 Hermes darf nur in seinem konfigurierten Arbeitsordner schreiben:
 
 ```text
+VALUERACER_RUNS_DIR=/srv/valueracer/runs
+VALUERACER_LOGS_DIR=/srv/valueracer/logs
+```
+
+Abwaertskompatible Legacy-Variablen duerfen fuer eine Uebergangszeit gelesen werden, aber neue Deployments sollen die `VALUERACER_*` Namen verwenden:
+
+```text
 ELEMENTKONFLUENZ_RUNS_DIR=/srv/elementkonfluenz/runs
 ELEMENTKONFLUENZ_LOGS_DIR=/srv/elementkonfluenz/logs
 ```
@@ -174,6 +197,12 @@ Auto-Posting ist erst erlaubt, wenn alle Punkte abgehakt sind:
 ```
 
 Bis dahin gilt:
+
+```text
+VALUERACER_DRY_RUN=true
+```
+
+Legacy fuer Uebergang:
 
 ```text
 ELEMENTKONFLUENZ_DRY_RUN=true
