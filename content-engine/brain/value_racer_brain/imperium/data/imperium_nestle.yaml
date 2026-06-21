@@ -1,0 +1,122 @@
+# Imperium research episode — Nestlé S.A.
+# Every numeric/historical claim below carries source_url + source_date.
+# Researched via live web search on 2026-06-21 (see commit message for the session this
+# came from); re-verify before reuse if `verified_at` is older than `verify_interval_days`.
+
+topic_id: imperium_nestle
+sector: consumer_goods
+region: EU
+
+owner:
+  display_name: "Nestlé"
+  legal_name: "Nestlé S.A."
+  hq_city: "Vevey, Schweiz"
+  founded_year: 1866
+  ticker: "NESN.SW"
+
+brands:
+  - name: "KitKat"
+    category: "Schokolade"
+    acquired_year: 1988
+    color_primary: "#D52B1E"
+    color_text: "#FFFFFF"
+    surprise_factor: 2
+    source_url: "https://en.wikipedia.org/wiki/Rowntree_Mackintosh_Confectionery"
+    source_date: 2026-06-21
+  - name: "Smarties"
+    category: "Süßwaren"
+    acquired_year: 1988
+    color_primary: "#7B2D8E"
+    color_text: "#FFFFFF"
+    surprise_factor: 4
+    source_url: "https://en.wikipedia.org/wiki/Rowntree_Mackintosh_Confectionery"
+    source_date: 2026-06-21
+  - name: "Nespresso"
+    category: "Kaffee"
+    acquired_year: 1986
+    color_primary: "#1A1A1A"
+    color_text: "#FFFFFF"
+    surprise_factor: 6
+    source_url: "https://en.wikipedia.org/wiki/Nespresso"
+    source_date: 2026-06-21
+  - name: "Purina"
+    category: "Tiernahrung"
+    acquired_year: 2001
+    color_primary: "#E30613"
+    color_text: "#FFFFFF"
+    surprise_factor: 7
+    source_url: "https://en.wikipedia.org/wiki/Nestl%C3%A9_Purina_PetCare"
+    source_date: 2026-06-21
+  - name: "Gerber"
+    category: "Babynahrung"
+    acquired_year: 2007
+    color_primary: "#5BA4D4"
+    color_text: "#FFFFFF"
+    surprise_factor: 8
+    source_url: "https://en.wikipedia.org/wiki/Gerber_Products_Company"
+    source_date: 2026-06-21
+  - name: "Maggi"
+    category: "Würzmittel"
+    acquired_year: 1947
+    color_primary: "#FFCC00"
+    color_text: "#000000"
+    surprise_factor: 5
+    source_url: "https://en.wikipedia.org/wiki/Maggi"
+    source_date: 2026-06-21
+  - name: "Cailler"
+    category: "Schokolade"
+    acquired_year: 1929
+    color_primary: "#4A2511"
+    color_text: "#FFFFFF"
+    surprise_factor: 9
+    source_url: "https://en.wikipedia.org/wiki/Cailler"
+    source_date: 2026-06-21
+
+facts:
+  - label: "UMSATZ"
+    value: 91.4
+    unit: "Mrd. CHF"
+    as_of_year: 2024
+    description: "Konzernumsatz Geschäftsjahr 2024"
+    source_url: "https://www.nestle.com/media/pressreleases/allpressreleases/full-year-results-2024"
+    source_date: 2025-02-13
+  - label: "MITARBEITER"
+    value: 271000
+    unit: "Mitarbeiter"
+    as_of_year: 2024
+    description: "Beschäftigte weltweit"
+    source_url: "https://www.statista.com/statistics/255203/total-number-of-nestle-employees-worldwide/"
+    source_date: 2026-06-21
+  - label: "PRAESENZ"
+    value: 187
+    unit: "Länder"
+    as_of_year: 2024
+    description: "Länder mit Geschäftstätigkeit"
+    source_url: "https://www.statista.com/topics/1439/nestle/"
+    source_date: 2026-06-21
+
+scale_comparison:
+  headline: "Mehr wert als Unilever und Danone zusammen"
+  unit: "Mrd. USD"
+  rows:
+    - label: "Nestlé"
+      value: 251.1
+      source_url: "https://companiesmarketcap.com/nestle/marketcap/"
+      source_date: 2026-06-21
+    - label: "Procter & Gamble"
+      value: 327.8
+      source_url: "https://companiesmarketcap.com/procter-and-gamble/marketcap/"
+      source_date: 2026-06-21
+    - label: "Unilever"
+      value: 124.6
+      source_url: "https://companiesmarketcap.com/unilever/marketcap/"
+      source_date: 2026-06-21
+    - label: "Danone"
+      value: 49.4
+      source_url: "https://companiesmarketcap.com/gbp/danone/marketcap/"
+      source_date: 2026-06-21
+
+researched_at: 2026-06-21
+verified: true
+verified_at: 2026-06-21
+verify_interval_days: 365
