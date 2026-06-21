@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "video_id": "49bbde73-d977-4fe6-a1e1-bf06f12f44f3",
+  "topic": {
+    "topic_id": "imperium_nestle",
+    "company_name": "Nestlé",
+    "ticker": "NESN.SW",
+    "sector": "consumer_goods",
+    "region": "EU"
+  },
+  "fps": 30,
+  "duration": {
+    "total_frames": 630,
+    "total_duration_sec": 21.0,
+    "phases": {
+      "hook": {
+        "start_frame": 0,
+        "end_frame": 60
+      },
+      "register_cards": {
+        "start_frame": 60,
+        "end_frame": 180
+      },
+      "beat": {
+        "start_frame": 180,
+        "end_frame": 225
+      },
+      "stamp": {
+        "start_frame": 225,
+        "end_frame": 270
+      },
+      "facts": {
+        "start_frame": 270,
+        "end_frame": 420
+      },
+      "scale": {
+        "start_frame": 420,
+        "end_frame": 540
+      },
+      "endcard": {
+        "start_frame": 540,
+        "end_frame": 630
+      }
+    }
+  },
+  "owner": {
+    "display_name": "Nestlé",
+    "legal_name": "Nestlé S.A.",
+    "hq_city": "Vevey, Schweiz",
+    "founded_year": 1866
+  },
+  "hook_lines": [
+    "WEM GEHÖRT",
+    "DAS ALLES?"
+  ],
+  "beat_line": "ALLE SPUREN FÜHREN ZU EINEM NAMEN",
+  "brands": [
+    {
+      "name": "KitKat",
+      "category": "Schokolade",
+      "year": 1988,
+      "color": "#D52B1E",
+      "text_color": "#FFFFFF"
+    },
+    {
+      "name": "Smarties",
+      "category": "Süßwaren",
+      "year": 1988,
+      "color": "#7B2D8E",
+      "text_color": "#FFFFFF"
+    },
+    {
+      "name": "Maggi",
+      "category": "Würzmittel",
+      "year": 1947,
+      "color": "#FFCC00",
+      "text_color": "#000000"
+    },
+    {
+      "name": "Nespresso",
+      "category": "Kaffee",
+      "year": 1986,
+      "color": "#1A1A1A",
+      "text_color": "#FFFFFF"
+    },
+    {
+      "name": "Purina",
+      "category": "Tiernahrung",
+      "year": 2001,
+      "color": "#E30613",
+      "text_color": "#FFFFFF"
+    },
+    {
+      "name": "Gerber",
+      "category": "Babynahrung",
+      "year": 2007,
+      "color": "#5BA4D4",
+      "text_color": "#FFFFFF"
+    },
+    {
+      "name": "Cailler",
+      "category": "Schokolade",
+      "year": 1929,
+      "color": "#4A2511",
+      "text_color": "#FFFFFF"
+    }
+  ],
+  "facts": [
+    {
+      "label": "UMSATZ",
+      "display_value": "91,4",
+      "unit": "Mrd. CHF",
+      "year": 2024,
+      "description": "Konzernumsatz Geschäftsjahr 2024"
+    },
+    {
+      "label": "MITARBEITER",
+      "display_value": "271.000",
+      "unit": "Mitarbeiter",
+      "year": 2024,
+      "description": "Beschäftigte weltweit"
+    },
+    {
+      "label": "PRAESENZ",
+      "display_value": "187",
+      "unit": "Länder",
+      "year": 2024,
+      "description": "Länder mit Geschäftstätigkeit"
+    }
+  ],
+  "scale_comparison": {
+    "headline": "Mehr wert als Unilever und Danone zusammen",
+    "unit": "Mrd. USD",
+    "rows": [
+      {
+        "label": "Nestlé",
+        "value": 251.1,
+        "hero": true
+      },
+      {
+        "label": "Procter & Gamble",
+        "value": 327.8,
+        "hero": false
+      },
+      {
+        "label": "Unilever",
+        "value": 124.6,
+        "hero": false
+      },
+      {
+        "label": "Danone",
+        "value": 49.4,
+        "hero": false
+      }
+    ]
+  },
+  "endcard": {
+    "ticker_label": "AKTIE · NESN.SW · 10 JAHRE",
+    "stock_from": 1000.0,
+    "stock_to": 1461.95,
+    "gain_pct": 46.2,
+    "disclaimer": "Keine Anlageberatung · Vergangenheit ungleich Zukunft"
+  },
+  "theme": {
+    "id": "imperium_dark",
+    "accent_color": "#C0392B",
+    "stamp_color": "#8B0000"
+  },
+  "qa": {
+    "hard_fail": false,
+    "sources_verified": true,
+    "results": [
+      {
+        "check": "brand_count",
+        "passed": true,
+        "detail": "7 brands (need 6-12)"
+      },
+      {
+        "check": "brands_sourced",
+        "passed": true,
+        "detail": "ok"
+      },
+      {
+        "check": "fact_count",
+        "passed": true,
+        "detail": "3 facts (need >=3)"
+      },
+      {
+        "check": "facts_sourced",
+        "passed": true,
+        "detail": "ok"
+      },
+      {
+        "check": "scale_comparison_rows",
+        "passed": true,
+        "detail": "4 rows (need >=3)"
+      },
+      {
+        "check": "scale_comparison_sourced",
+        "passed": true,
+        "detail": "ok"
+      },
+      {
+        "check": "verification_fresh",
+        "passed": true,
+        "detail": "ok"
+      }
+    ]
+  }
+}

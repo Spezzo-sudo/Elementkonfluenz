@@ -25,19 +25,22 @@ Brain-Code.
     läuft end-to-end durch (`python -m value_racer_brain.imperium.cli build --data
     value_racer_brain/imperium/data/imperium_nestle.yaml --out <pfad>`), Status/Staleness aller
     Episoden über `python -m value_racer_brain.imperium.cli research-status`.
-- [`renderer/`](renderer) — Remotion-Projekt, das `ScenePlan`-JSON liest und per `interpolate()`
-  echte Kamera-/Event-Übergänge rendert (kein Keyframe-Snapping, kein Ruckeln). Verifiziert per
-  `npm run render -- --props=<scene_plan.json>`. Deckt bisher nur den chart_race-Ast ab; eine
-  zweite Composition (`ImperiumComposition`) für `EmpireScenePlan` ist noch offen.
-- Brain → Renderer End-to-End geprüft (chart_race): ein live aus yfinance generierter
-  `scene_plan.json` rendert korrekt mit seiner eigenen Frame-Anzahl/Dauer (nicht nur mit dem
-  Beispiel-Plan).
+- [`renderer/`](renderer) — Remotion-Projekt mit zwei parallelen Compositions, beide ohne
+  Geschäftslogik (reines Pixel-Malen aus dem jeweiligen JSON-Contract):
+  - `ScenePlan` (chart_race, 1920×1080) — liest `ScenePlan`-JSON und rendert per `interpolate()`
+    echte Kamera-/Event-Übergänge (kein Keyframe-Snapping, kein Ruckeln). Verifiziert per
+    `npm run render -- --props=<scene_plan.json>`; ein live aus yfinance generierter Plan
+    rendert korrekt mit seiner eigenen Frame-Anzahl/Dauer (nicht nur mit dem Beispiel-Plan).
+  - `EmpireScenePlan` (imperium, 1080×1920) — liest `EmpireScenePlan`-JSON, sieben
+    Phasen-Komponenten unter `src/components/imperium/` (Hook, Register-Karten-Cascade, Beat,
+    Stempel-Reveal via `spring()`, Fakten-Karten, Skalenvergleich-Balken, Endcard). Verifiziert
+    per `npm run render:imperium` gegen die echte Nestlé-Episode (Typecheck clean, voller Render
+    630/630 Frames, alle sieben Phasen per `remotion still` visuell geprüft). Da kein
+    Original-HTML/CSS-Prototyp im Repo liegt, ist die Optik direkt aus dem
+    `EMPIRE_SCENE_PLAN.md`-Contract und den Design-Notizen abgeleitet, nicht 1:1 portiert.
 
 ## Geplant
 
-- `ImperiumComposition`-Renderer für `EmpireScenePlan` (Register-Karten, Stempel-Reveal,
-  Fakten-Karten, Skalenvergleich, Endcard) — Optik orientiert sich am bereitgestellten
-  HTML-Prototyp.
 - Weitere Imperium-Episoden über mehrere Sektoren/Regionen, recherchiert in Batches (siehe
   „Automatisierungs-Modell" in [`EMPIRE_SCENE_PLAN.md`](EMPIRE_SCENE_PLAN.md)).
 - Diagramm-Typen als austauschbare Templates (chart_race): aktuell nur Bar Race; Line Race, Pie-Morph, Map/Choropleth, Ranking-Tabelle folgen.
@@ -48,4 +51,6 @@ Brain-Code.
 
 - Theme-/Hook-Pool-Größe und initiale Gewichtung (vor Anbindung an den Analytics-Feedback-Loop).
 - Finale Diagramm-Bibliothek für weitere Diagramm-Typen (D3.js vs. eigene Implementierung).
-- HTML-Prototyp für `ImperiumComposition` (liegt noch nicht im Repo).
+- Original-HTML/CSS-Prototyp für `imperium` liegt nicht im Repo — die `EmpireScenePlan`-Composition
+  wurde daher aus dem Contract und den Design-Notizen heraus gebaut, nicht 1:1 portiert. Ein
+  späterer visueller Abgleich gegen den Prototyp (falls verfügbar gemacht) steht noch aus.
