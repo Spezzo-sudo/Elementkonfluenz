@@ -3,14 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "elementkonfluenz_orchestrator"
+name = "valueracer_orchestrator"
 version = "0.1.0"
-description = "Hermes-compatible dry-run orchestrator for Elementkonfluenz jobs."
+description = "Hermes-compatible dry-run orchestrator for ValueRacer jobs."
 requires-python = ">=3.11"
 dependencies = []
 
 [project.scripts]
-elementkonfluenz-orchestrator = "elementkonfluenz_orchestrator.cli:main"
+valueracer-orchestrator = "valueracer_orchestrator.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["elementkonfluenz_orchestrator"]
+packages = ["elementkonfluenz_orchestrator", "valueracer_orchestrator"]
