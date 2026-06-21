@@ -17,6 +17,20 @@ Brain-Code.
   - chart_race-Ast: Daten (yfinance), Kamera-Policy, Zeitachsen-Mapping, Event-Erkennung,
     Dauer-Planung/QA und Advisory-Wording-Check sind aus der alten Engine portiert und laufen
     end-to-end über `python -m value_racer_brain.cli`.
+  - **Varianz (Phase 2 des Projektplans)**: `theme_pool.py` (4 visuell unterschiedliche Themes —
+    `default_dark`, `neon_sunset`, `mint_fresh`, `crimson_pulse`, je mit eigener Farb-/Font-Family-/
+    Glow-Kombination) und `hook_pool.py` (3 Intro-Layouts — `default`, `split_vs`, `stamp_cascade`),
+    je mit gewichteter Zufallsauswahl (`pick_theme()`/`pick_hook_variant()`, aktuell Gleichgewichtung
+    als Platzhalter bis der Analytics-Feedback-Loop echte Gewichte liefert). `cli.py --theme-id`/
+    `--hook-variant-id` akzeptieren eine konkrete ID oder `random`; der vorherige Bug (Flag wurde
+    geparst, aber nie an `build_scene_plan` durchgereicht — Theme war immer `default_dark`) ist
+    gefixt. `event_styles` bleiben über alle Themes identisch (semantisch, nicht stilistisch).
+    Renderer-seitig ist `IntroPhase.tsx` jetzt ein Dispatcher über `hook_variant.id`, `BarRace.tsx`/
+    `Endscreen.tsx` brauchten keine Änderung (lasen Theme-Felder schon vorher generisch). Verifiziert:
+    fünf aufeinanderfolgende `--theme-id random --hook-variant-id random`-Läufe zeigen unterschiedliche
+    Theme-/Hook-Kombinationen; alle drei Hook-Layouts × repräsentative Themes per `remotion still`
+    visuell geprüft (kein Overflow, Glow/Farben korrekt je Theme); ein voller 960-Frame-Render mit
+    zufälligem Theme/Hook läuft 960/960 durch.
   - imperium-Ast (`value_racer_brain/imperium/`): eigenes Subpackage (`research.py`/`qa.py`/
     `scene_plan.py`/`builder.py`/`cli.py`), liest kuratierte, quellenbelegte Konzern-Recherche aus
     `imperium/data/*.yaml` und baut daraus ein `EmpireScenePlan`. Wie eine neue Episode
@@ -54,12 +68,14 @@ Brain-Code.
 - Weitere Imperium-Episoden über mehrere Sektoren/Regionen, recherchiert in Batches (siehe
   „Automatisierungs-Modell" in [`EMPIRE_SCENE_PLAN.md`](EMPIRE_SCENE_PLAN.md)).
 - Diagramm-Typen als austauschbare Templates (chart_race): aktuell nur Bar Race; Line Race, Pie-Morph, Map/Choropleth, Ranking-Tabelle folgen.
-- Theme-Pool (mehrere Farb-/Typografie-Sets) und Hook-Intro-Pool mit gewichteter Auswahl, damit sich Videos nicht strukturell wiederholen.
+- Theme-/Hook-Pool um weitere Einträge erweitern, sobald der Analytics-Feedback-Loop (Phase 4) echte
+  Performance-Gewichte statt der aktuellen Gleichgewichtung liefert.
 - Audio-Mixing (Musik/Voiceover) als Teil der Remotion-Composition.
 
 ## Offen
 
-- Theme-/Hook-Pool-Größe und initiale Gewichtung (vor Anbindung an den Analytics-Feedback-Loop).
+- Theme-/Hook-Pool-Größe und initiale Gewichtung sind aktuell ein bewusster Platzhalter
+  (Gleichgewichtung über 4 Themes/3 Hooks) bis der Analytics-Feedback-Loop angebunden ist.
 - Finale Diagramm-Bibliothek für weitere Diagramm-Typen (D3.js vs. eigene Implementierung).
 - Original-HTML/CSS-Prototyp für `imperium` liegt nicht im Repo — die `EmpireScenePlan`-Composition
   wurde daher aus dem Contract und den Design-Notizen heraus gebaut, nicht 1:1 portiert. Ein

@@ -7,7 +7,7 @@ job) should go through build_scene_plan rather than calling the submodules direc
 from __future__ import annotations
 
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import List
 
 import pandas as pd
 
@@ -15,6 +15,7 @@ from . import camera as camera_mod
 from . import data as data_mod
 from . import events as events_mod
 from . import planning as planning_mod
+from . import theme_pool as theme_pool_mod
 from . import timemap as timemap_mod
 from .advisory import check_advisory_wording
 from .scene_plan import (
@@ -45,23 +46,6 @@ _DEFAULT_COLOR_PALETTE = [
 ]
 
 
-def _default_theme_dict() -> Dict[str, Any]:
-    return {
-        "id": "default_dark",
-        "colors": {
-            "bg": {"primary": "#080c14", "secondary": "#0f1623"},
-            "text": {"primary": "#FFFFFF", "secondary": "#AAAAAA"},
-            "accent": {"primary": "#00E5FF"},
-        },
-        "font_family": "Inter",
-        "glow_mode": "full",
-        "event_styles": {
-            et.value: {"color": style.accent_color, "pulse": style.pulse}
-            for et, style in events_mod.STYLES.items()
-        },
-    }
-
-
 def build_scene_plan(topic_brief: dict, theme: dict, hook_variant: dict) -> ScenePlan:
     """Build a complete ScenePlan from a topic brief.
 
@@ -69,7 +53,7 @@ def build_scene_plan(topic_brief: dict, theme: dict, hook_variant: dict) -> Scen
                    "fps": 30, "investment": 1000, "hook_title": "...",
                    "events": [...], "mode": "evergreen"|"news"}
     theme: dict matching the `theme` block shape (id/colors/font_family/glow_mode/event_styles);
-           an empty dict falls back to _default_theme_dict().
+           an empty dict falls back to theme_pool's default_dark theme.
     hook_variant: dict matching {"id": "..."}.
     """
     assets: List[str] = list(topic_brief["assets"])
@@ -182,7 +166,7 @@ def build_scene_plan(topic_brief: dict, theme: dict, hook_variant: dict) -> Scen
     ))
 
     # 7. Assemble ScenePlan
-    theme_dict = theme if theme else _default_theme_dict()
+    theme_dict = theme if theme else theme_pool_mod.get_theme_by_id("default_dark")
     palette = {t: _DEFAULT_COLOR_PALETTE[i % len(_DEFAULT_COLOR_PALETTE)] for i, t in enumerate(df.columns)}
 
     data_series = [

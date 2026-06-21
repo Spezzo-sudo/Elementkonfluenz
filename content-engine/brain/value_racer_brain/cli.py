@@ -6,6 +6,8 @@ import argparse
 import logging
 import sys
 
+from . import hook_pool as hook_pool_mod
+from . import theme_pool as theme_pool_mod
 from .builder import build_scene_plan
 
 
@@ -19,8 +21,14 @@ def main(argv=None) -> int:
     parser.add_argument("--investment", type=float, default=1000.0)
     parser.add_argument("--mode", default="evergreen", choices=["evergreen", "news"])
     parser.add_argument("--hook-title", default="", help="Video title; checked for advisory-wording red flags")
-    parser.add_argument("--theme-id", default="default_dark")
-    parser.add_argument("--hook-variant-id", default="default")
+    parser.add_argument(
+        "--theme-id", default="default_dark",
+        help=f'Theme id from theme_pool ({", ".join(theme_pool_mod.all_theme_ids())}), or "random" for a weighted pick',
+    )
+    parser.add_argument(
+        "--hook-variant-id", default="default",
+        help=f'Hook variant id from hook_pool ({", ".join(hook_pool_mod.all_hook_variant_ids())}), or "random" for a weighted pick',
+    )
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
 
@@ -43,7 +51,20 @@ def main(argv=None) -> int:
     }
 
     try:
-        plan = build_scene_plan(topic_brief, theme={}, hook_variant={"id": args.hook_variant_id})
+        theme_dict = (
+            theme_pool_mod.pick_theme() if args.theme_id == "random"
+            else theme_pool_mod.get_theme_by_id(args.theme_id)
+        )
+        hook_variant = (
+            hook_pool_mod.pick_hook_variant() if args.hook_variant_id == "random"
+            else hook_pool_mod.get_hook_variant_by_id(args.hook_variant_id)
+        )
+    except KeyError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    try:
+        plan = build_scene_plan(topic_brief, theme=theme_dict, hook_variant=hook_variant)
     except Exception as exc:  # noqa: BLE001 - surface a clean CLI error rather than a traceback
         print(f"error: failed to build scene plan: {exc}", file=sys.stderr)
         return 1
@@ -51,7 +72,10 @@ def main(argv=None) -> int:
     with open(args.out, "w", encoding="utf-8") as f:
         f.write(plan.to_json())
 
-    print(f"wrote {args.out} (video_id={plan.video_id}, hard_fail={plan.qa.hard_fail})")
+    print(
+        f"wrote {args.out} (video_id={plan.video_id}, hard_fail={plan.qa.hard_fail}, "
+        f"theme_id={plan.theme.id}, hook_variant_id={plan.hook_variant.id})"
+    )
     return 0
 
 
