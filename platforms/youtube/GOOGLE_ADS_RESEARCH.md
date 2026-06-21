@@ -2,7 +2,7 @@
 
 Stand: 2026-06-21
 
-Dieses Dokument definiert, welche Rolle Google Ads fuer Elementkonfluenz spielen soll. Wichtig: Google Ads ist in der Startphase keine Auto-Werbe-Engine, sondern eine Research-Schicht fuer SEO, Themencluster und Keyword-Priorisierung.
+Dieses Dokument definiert, welche Rolle Google Ads fuer **ValueRacer** spielen soll. Wichtig: Google Ads ist in der Startphase keine Auto-Werbe-Engine, sondern eine Research-Schicht fuer SEO, Themencluster und Keyword-Priorisierung.
 
 ## Offizielle Doku-Basis
 
@@ -133,6 +133,21 @@ Bis dahin gilt:
 
 ```text
 GOOGLE_ADS_RESEARCH_ONLY=true
+```
+
+## Bestehende VPS-Secrets
+
+Wenn Google-Ads-Secrets bereits auf dem Hermes-VPS existieren, werden sie nur gelesen. Sie werden nicht neu erzeugt, nicht ins Repo kopiert und nicht automatisch rotiert.
+
+Beispielhafte Variablennamen:
+
+```text
+GOOGLE_ADS_DEVELOPER_TOKEN
+GOOGLE_ADS_CUSTOMER_ID
+GOOGLE_ADS_LOGIN_CUSTOMER_ID
+GOOGLE_ADS_CLIENT_ID
+GOOGLE_ADS_CLIENT_SECRET
+GOOGLE_ADS_REFRESH_TOKEN
 ```
 
 ## Hermes-Regel
