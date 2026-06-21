@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.egg-info/
+*.sqlite3
+node_modules/
+out/

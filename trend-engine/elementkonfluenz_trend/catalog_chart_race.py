@@ -1,0 +1,96 @@
+"""Catalog A: chart_race asset combinations, tagged by category for cooldown/rotation."""
+from .models import ChartRaceTopic
+
+CATALOG: list[ChartRaceTopic] = [
+    ChartRaceTopic(
+        topic_id="crypto_major_btc_eth",
+        tickers=["BTC-USD", "ETH-USD"],
+        category="crypto_major",
+        period_days=365,
+        keywords=["bitcoin", "ethereum", "crypto"],
+    ),
+    ChartRaceTopic(
+        topic_id="crypto_major_btc_sp500",
+        tickers=["BTC-USD", "^GSPC"],
+        category="crypto_major",
+        period_days=1825,
+        keywords=["bitcoin", "sp500", "stocks"],
+    ),
+    ChartRaceTopic(
+        topic_id="crypto_alt_sol_ada_doge",
+        tickers=["SOL-USD", "ADA-USD", "DOGE-USD"],
+        category="crypto_alt",
+        period_days=365,
+        keywords=["altcoins", "solana", "cardano", "dogecoin"],
+    ),
+    ChartRaceTopic(
+        topic_id="crypto_alt_xrp_ltc",
+        tickers=["XRP-USD", "LTC-USD"],
+        category="crypto_alt",
+        period_days=730,
+        keywords=["ripple", "litecoin", "altcoins"],
+    ),
+    ChartRaceTopic(
+        topic_id="single_stock_nvda_aapl",
+        tickers=["NVDA", "AAPL"],
+        category="single_stock",
+        period_days=1825,
+        keywords=["nvidia", "apple", "tech stocks"],
+    ),
+    ChartRaceTopic(
+        topic_id="single_stock_tsla_f_gm",
+        tickers=["TSLA", "F", "GM"],
+        category="single_stock",
+        period_days=1095,
+        keywords=["tesla", "ford", "gm", "automotive stocks"],
+    ),
+    ChartRaceTopic(
+        topic_id="single_stock_amzn_meta_googl",
+        tickers=["AMZN", "META", "GOOGL"],
+        category="single_stock",
+        period_days=1825,
+        keywords=["amazon", "meta", "google", "big tech"],
+    ),
+    ChartRaceTopic(
+        topic_id="index_etf_spy_qqq_vti",
+        tickers=["SPY", "QQQ", "VTI"],
+        category="index_etf",
+        period_days=1825,
+        keywords=["sp500", "nasdaq", "total market", "etf"],
+    ),
+    ChartRaceTopic(
+        topic_id="index_etf_vwo_efa",
+        tickers=["VWO", "EFA"],
+        category="index_etf",
+        period_days=1825,
+        keywords=["emerging markets", "developed markets", "etf"],
+    ),
+    ChartRaceTopic(
+        topic_id="commodity_gld_slv_uso",
+        tickers=["GLD", "SLV", "USO"],
+        category="commodity",
+        period_days=1825,
+        keywords=["gold", "silver", "oil", "commodities"],
+    ),
+    ChartRaceTopic(
+        topic_id="commodity_gld_btc",
+        tickers=["GLD", "BTC-USD"],
+        category="commodity",
+        period_days=1825,
+        keywords=["gold", "bitcoin", "inflation hedge"],
+    ),
+    ChartRaceTopic(
+        topic_id="mixed_basket_classic",
+        tickers=["BTC-USD", "^GSPC", "GLD"],
+        category="mixed_basket",
+        period_days=1825,
+        keywords=["bitcoin vs stocks vs gold", "1000 dollars"],
+    ),
+    ChartRaceTopic(
+        topic_id="mixed_basket_eth_qqq",
+        tickers=["ETH-USD", "QQQ"],
+        category="mixed_basket",
+        period_days=1095,
+        keywords=["ethereum", "nasdaq", "comparison"],
+    ),
+]
