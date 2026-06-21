@@ -1,0 +1,33 @@
+{
+  "title": "ValueRacer YouTube Upload Result",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "platform",
+    "job_id",
+    "ok",
+    "mode",
+    "requires_review",
+    "ready_to_publish",
+    "warnings"
+  ],
+  "properties": {
+    "contract_version": {"type": "string", "default": "0.1"},
+    "platform": {"type": "string", "const": "youtube"},
+    "job_id": {"type": "string", "minLength": 1},
+    "ok": {"type": "boolean"},
+    "mode": {"type": "string", "enum": ["dry_run", "publish"]},
+    "video_id": {"type": ["string", "null"]},
+    "privacy_status": {"type": ["string", "null"], "enum": ["private", "unlisted", "public", null]},
+    "uploaded_at": {"type": ["string", "null"]},
+    "thumbnail_set": {"type": "boolean", "default": false},
+    "captions_uploaded": {"type": "boolean", "default": false},
+    "error_code": {"type": "string"},
+    "message": {"type": "string"},
+    "retryable": {"type": "boolean"},
+    "requires_review": {"type": "boolean", "default": true},
+    "ready_to_publish": {"type": "boolean", "default": false},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,37 @@
+{
+  "title": "ValueRacer YouTube Publish Plan",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "platform",
+    "mode",
+    "job_id",
+    "video_file",
+    "metadata_file",
+    "privacy_status",
+    "notify_subscribers",
+    "made_for_kids",
+    "contains_synthetic_media",
+    "requires_review",
+    "ready_to_publish"
+  ],
+  "properties": {
+    "contract_version": {"type": "string", "default": "0.1"},
+    "platform": {"type": "string", "const": "youtube"},
+    "mode": {"type": "string", "enum": ["dry_run", "publish"]},
+    "job_id": {"type": "string", "minLength": 1},
+    "video_file": {"type": "string", "minLength": 1},
+    "thumbnail_file": {"type": ["string", "null"]},
+    "caption_file": {"type": ["string", "null"]},
+    "metadata_file": {"type": "string", "minLength": 1},
+    "privacy_status": {"type": "string", "enum": ["private", "unlisted", "public"]},
+    "publish_at": {"type": ["string", "null"]},
+    "notify_subscribers": {"type": "boolean", "default": false},
+    "made_for_kids": {"type": "boolean", "default": false},
+    "contains_synthetic_media": {"type": "boolean"},
+    "requires_review": {"type": "boolean", "default": true},
+    "ready_to_publish": {"type": "boolean", "default": false},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

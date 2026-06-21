@@ -1,0 +1,58 @@
+{
+  "title": "ValueRacer YouTube Metadata",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "platform",
+    "job_id",
+    "title",
+    "description",
+    "tags",
+    "hashtags",
+    "thumbnail_text",
+    "default_language",
+    "category_id",
+    "made_for_kids",
+    "contains_synthetic_media",
+    "source_disclaimer",
+    "advisory_check",
+    "clickbait_integrity_check",
+    "requires_review"
+  ],
+  "properties": {
+    "contract_version": {"type": "string", "default": "0.1"},
+    "platform": {"type": "string", "const": "youtube"},
+    "job_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1, "maxLength": 100},
+    "description": {"type": "string"},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "hashtags": {"type": "array", "items": {"type": "string"}},
+    "thumbnail_text": {"type": "string"},
+    "default_language": {"type": "string", "default": "de"},
+    "category_id": {"type": "string"},
+    "made_for_kids": {"type": "boolean", "default": false},
+    "contains_synthetic_media": {"type": "boolean"},
+    "source_disclaimer": {"type": "string"},
+    "advisory_check": {
+      "type": "object",
+      "required": ["flagged", "matched_keywords", "suggestions"],
+      "properties": {
+        "flagged": {"type": "boolean"},
+        "matched_keywords": {"type": "array", "items": {"type": "string"}},
+        "suggestions": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "clickbait_integrity_check": {
+      "type": "object",
+      "required": ["passed", "reason"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "requires_review": {"type": "boolean", "default": true}
+  },
+  "additionalProperties": true
+}
