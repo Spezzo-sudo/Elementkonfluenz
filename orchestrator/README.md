@@ -66,15 +66,16 @@ Dabei nutzt der Orchestrator:
 - Template-Rotation
 - History-Datei, standardmaessig im uebergeordneten `runs/`-Ordner
 
-## Market Scan + YouTube SEO
+## Market Scan + YouTube SEO + QA
 
-Wenn `trend-engine` und `seo-engine` installiert sind, kann Hermes in einem Schritt ein neues Thema waehlen und YouTube-Metadaten vorbereiten:
+Wenn `trend-engine`, `seo-engine` und `qa-engine` installiert sind, kann Hermes in einem Schritt ein neues Thema waehlen, YouTube-Metadaten vorbereiten und QA-Gates ausfuehren:
 
 ```bash
 python -m valueracer_orchestrator.cli \
   --dry-run \
   --run-mode market_scan \
   --with-youtube-seo \
+  --with-qa \
   --out ../runs/test-market-scan
 ```
 
@@ -88,10 +89,13 @@ Dann entstehen:
 │   └── youtube.json
 ├── publish/
 │   └── youtube_publish_plan.json
+├── qa.json
 ├── job_result.json
 └── logs/
     └── orchestrator.log
 ```
+
+Wenn QA `hard_fail=true` meldet, setzt der Orchestrator `job_result.ok=false`, `stage=qa` und `error_code=QA_HARD_FAIL`.
 
 ## Mit YouTube SEO Dry-Run fuer Manual Topic
 
@@ -130,4 +134,4 @@ Die interne Implementierung kann fuer eine Uebergangsphase noch den alten Paketn
 
 ## Wichtig
 
-Dieser Orchestrator ruft bewusst noch keine Live-Marktdaten, keinen Renderer und keine Distribution auf. Market Scan und YouTube SEO sind lokale Dry-Run-Artefaktgeneratoren und posten nichts.
+Dieser Orchestrator ruft bewusst noch keine Live-Marktdaten, keinen Renderer und keine Distribution auf. Market Scan, YouTube SEO und QA sind lokale Dry-Run-Artefaktgeneratoren und posten nichts.
