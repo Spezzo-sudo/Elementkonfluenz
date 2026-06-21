@@ -184,6 +184,47 @@ jobs:
           test -f runs/ci-full-dry-run/publish/youtube_publish_plan.json
           test -f runs/ci-full-dry-run/job_result.json
 
+  orchestrator-market-scan-integration:
+    name: Orchestrator with market_scan and YouTube SEO
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            orchestrator/pyproject.toml
+            trend-engine/pyproject.toml
+            seo-engine/pyproject.toml
+
+      - name: Install packages
+        run: |
+          python -m pip install -e orchestrator
+          python -m pip install -e trend-engine
+          python -m pip install -e seo-engine
+
+      - name: Create market-scan dry-run job
+        run: |
+          python -m valueracer_orchestrator.cli \
+            --dry-run \
+            --run-mode market_scan \
+            --with-youtube-seo \
+            --out runs/ci-market-scan-full
+
+      - name: Verify market-scan integrated artifacts
+        run: |
+          test -f runs/ci-market-scan-full/topic_brief.json
+          test -f runs/ci-market-scan-full/sources.json
+          test -f runs/ci-market-scan-full/metadata/youtube.json
+          test -f runs/ci-market-scan-full/publish/youtube_publish_plan.json
+          test -f runs/ci-market-scan-full/job_result.json
+          test -f runs/ci-market-scan-full/logs/orchestrator.log
+          test -f runs/history.jsonl
+
   renderer-typecheck:
     name: Remotion renderer typecheck
     runs-on: ubuntu-latest
