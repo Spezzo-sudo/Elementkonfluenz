@@ -277,6 +277,60 @@ jobs:
           assert payload['ready_to_publish'] is False
           PY
 
+  orchestrator-qa-integration:
+    name: Orchestrator with market_scan, YouTube SEO, and QA
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            orchestrator/pyproject.toml
+            trend-engine/pyproject.toml
+            seo-engine/pyproject.toml
+            qa-engine/pyproject.toml
+
+      - name: Install packages
+        run: |
+          python -m pip install -e orchestrator
+          python -m pip install -e trend-engine
+          python -m pip install -e seo-engine
+          python -m pip install -e qa-engine
+
+      - name: Create full QA-gated dry-run job
+        run: |
+          python -m valueracer_orchestrator.cli \
+            --dry-run \
+            --run-mode market_scan \
+            --with-youtube-seo \
+            --with-qa \
+            --out runs/ci-qa-gated-market-scan
+
+      - name: Verify QA-gated artifacts
+        run: |
+          test -f runs/ci-qa-gated-market-scan/topic_brief.json
+          test -f runs/ci-qa-gated-market-scan/sources.json
+          test -f runs/ci-qa-gated-market-scan/metadata/youtube.json
+          test -f runs/ci-qa-gated-market-scan/publish/youtube_publish_plan.json
+          test -f runs/ci-qa-gated-market-scan/qa.json
+          test -f runs/ci-qa-gated-market-scan/job_result.json
+          python - <<'PY'
+          import json
+          qa = json.load(open('runs/ci-qa-gated-market-scan/qa.json', encoding='utf-8'))
+          job = json.load(open('runs/ci-qa-gated-market-scan/job_result.json', encoding='utf-8'))
+          assert qa['ok'] is True
+          assert qa['hard_fail'] is False
+          assert job['ok'] is True
+          assert 'qa.json' in job['artifacts']
+          assert job['requires_review'] is True
+          assert job['ready_to_publish'] is False
+          PY
+
   renderer-typecheck:
     name: Remotion renderer typecheck
     runs-on: ubuntu-latest
