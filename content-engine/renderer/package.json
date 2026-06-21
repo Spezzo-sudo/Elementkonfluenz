@@ -9,7 +9,7 @@
     "render": "remotion render src/index.ts ScenePlan out/output.mp4",
     "still": "remotion still",
     "upgrade": "remotion upgrade",
-    "typecheck": "tsc -noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@remotion/cli": "4.0.481",
