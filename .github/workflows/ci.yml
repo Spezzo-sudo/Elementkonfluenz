@@ -39,6 +39,39 @@ jobs:
       - name: CLI help smoke test
         run: python -m elementkonfluenz_brain.cli --help
 
+  orchestrator-smoke-test:
+    name: ValueRacer orchestrator dry-run smoke test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: orchestrator
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: orchestrator/pyproject.toml
+
+      - name: Install Orchestrator package
+        run: python -m pip install -e .
+
+      - name: CLI help smoke test
+        run: python -m valueracer_orchestrator.cli --help
+
+      - name: Create dry-run job
+        run: python -m valueracer_orchestrator.cli --dry-run --topic "Gold vs S&P 500" --out ../runs/ci-dry-run
+
+      - name: Verify dry-run artifacts
+        run: |
+          test -f ../runs/ci-dry-run/topic_brief.json
+          test -f ../runs/ci-dry-run/sources.json
+          test -f ../runs/ci-dry-run/job_result.json
+          test -f ../runs/ci-dry-run/logs/orchestrator.log
+
   renderer-typecheck:
     name: Remotion renderer typecheck
     runs-on: ubuntu-latest
