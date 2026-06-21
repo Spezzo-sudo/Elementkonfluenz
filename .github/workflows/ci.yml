@@ -72,6 +72,38 @@ jobs:
           test -f ../runs/ci-dry-run/job_result.json
           test -f ../runs/ci-dry-run/logs/orchestrator.log
 
+  seo-smoke-test:
+    name: ValueRacer SEO dry-run smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            orchestrator/pyproject.toml
+            seo-engine/pyproject.toml
+
+      - name: Install packages
+        run: |
+          python -m pip install -e orchestrator
+          python -m pip install -e seo-engine
+
+      - name: Create orchestrator dry-run job
+        run: python -m valueracer_orchestrator.cli --dry-run --topic "Gold vs S&P 500" --out runs/ci-seo-dry-run
+
+      - name: Generate YouTube metadata dry-run
+        run: python -m valueracer_seo.cli --dry-run --run-dir runs/ci-seo-dry-run
+
+      - name: Verify SEO artifacts
+        run: |
+          test -f runs/ci-seo-dry-run/metadata/youtube.json
+          test -f runs/ci-seo-dry-run/publish/youtube_publish_plan.json
+
   renderer-typecheck:
     name: Remotion renderer typecheck
     runs-on: ubuntu-latest
