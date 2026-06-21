@@ -1,25 +1,34 @@
-# Roadmap: Elementkonfluenz
+# Roadmap: ValueRacer
 
 Stand: 2026-06-21
 
 Diese Roadmap ordnet die naechsten Schritte nach Risiko und Nutzen. Ziel ist, aus dem aktuellen technischen Kern eine reproduzierbare, erweiterbare und spaeter automatisierbare Short-Video-Pipeline zu machen.
 
-## Phase 0: Stabilisierung
+## Phase 0: Stabilisierung und Naming
 
-Ziel: Der vorhandene Stand soll reproduzierbar pruefbar werden.
+Ziel: Der vorhandene Stand soll reproduzierbar pruefbar werden und unter dem korrekten Produktnamen `ValueRacer` weiterlaufen.
 
-- [ ] GitHub Actions Workflow anlegen
-  - [ ] Python-Brain installieren
-  - [ ] Python-Import/CLI-Smoke-Test ausfuehren
-  - [ ] Renderer mit `npm ci` installieren
-  - [ ] Renderer-Typecheck ausfuehren
-- [ ] `README.md` um einen Quickstart erweitern
+- [x] GitHub Actions Workflow anlegen
+  - [x] Python-Brain installieren
+  - [x] Python-Import/CLI-Smoke-Test ausfuehren
+  - [x] Renderer mit `npm ci` installieren
+  - [x] Renderer-Typecheck ausfuehren
+- [x] `README.md` um einen Quickstart erweitern
+- [x] Hermes Contract definieren
+- [x] Content Standard definieren
+- [x] VPS-Migration absichern
+- [ ] Produktname und neue Dokumentation auf `ValueRacer` setzen
+- [ ] Offene PRs auf alte `Elementkonfluenz`-Nennung pruefen
+- [ ] GitHub-Repo optional auf `Spezzo-sudo/ValueRacer` umbenennen
+- [ ] VPS-Zielpfad `/srv/valueracer` vorbereiten
 - [ ] Beispiel-ScenePlan sauber dokumentieren
 - [ ] Zielauflösung klaeren: 16:9 Debug-Render vs. 9:16 Shorts-Render
 
 Akzeptanzkriterium:
 
 - Ein Pull Request zeigt automatisch, ob Brain und Renderer grundsaetzlich baubar sind.
+- Neue Dokumentation verwendet `ValueRacer` als Produktnamen.
+- Alte Namen sind nur noch als Legacy/Migration markiert.
 
 ## Phase 1: Content Engine MVP haerten
 
@@ -31,10 +40,12 @@ Ziel: Ein Video soll aus einem Topic-Brief stabil erzeugt werden koennen.
 - [ ] ScenePlan-Schema versionieren und validieren
 - [ ] Renderer-Fehler bei unvollstaendigem ScenePlan vermeiden
 - [ ] 9:16 Composition fuer Shorts/Reels/TikTok ergaenzen
+- [ ] Python-Brain-Namespace kontrolliert von `elementkonfluenz_brain` auf ValueRacer-Namespace migrieren oder Alias einfuehren
 
 Akzeptanzkriterium:
 
 - Ein ScenePlan fuer mehrere Ticker rendert reproduzierbar als vertikales Short-Video.
+- Legacy-Namensraeume brechen bestehende Hermes-/CI-Flows nicht.
 
 ## Phase 2: Template-Erweiterung
 
@@ -110,11 +121,11 @@ Akzeptanzkriterium:
 
 ## Empfohlener naechster PR nach dieser Roadmap
 
-`ci/bootstrap-quality-checks`
+`naming/complete-valueracer-followups`
 
 Inhalt:
 
-- `.github/workflows/ci.yml`
-- Python-Brain Smoke-Test
-- Renderer TypeScript Check
-- README Quickstart
+- offene PRs auf alten Namen pruefen
+- Duplicate/obsolete PRs schliessen
+- Orchestrator/YouTube-Spec auf ValueRacer-Naming aktualisieren
+- danach erst SEO-Dry-Run bauen

@@ -1,22 +1,32 @@
-# Projektstatus: Elementkonfluenz
+# Projektstatus: ValueRacer
 
 Stand: 2026-06-21
 
 ## Kurzfassung
 
-Elementkonfluenz ist aktuell als automatisierte Pipeline fuer datengetriebene Short-Videos angelegt. Ziel ist eine taegliche Produktion von Bar-/Line-Race-Charts, Rankings und Maps fuer YouTube Shorts, TikTok, Instagram Reels und X. Die Themenwahl soll spaeter ueber aktuelle gesellschaftliche und finanzielle Trends erfolgen, nicht zufaellig.
+**ValueRacer** ist aktuell als automatisierte Pipeline fuer datengetriebene Short-Videos angelegt. Ziel ist eine taegliche Produktion von Bar-/Line-Race-Charts, Rankings und Maps fuer YouTube Shorts, TikTok, Instagram Reels und X. Die Themenwahl soll spaeter ueber aktuelle gesellschaftliche und finanzielle Trends erfolgen, nicht zufaellig.
+
+Der alte Arbeitsname `Elementkonfluenz` wurde abgeloest. Er kann in historischen Commits, offenen PRs oder internen Paketnamen noch vorkommen, soll aber nicht mehr fuer Produktkommunikation, VPS-Zielpfade oder neue Dokumentation verwendet werden.
 
 Das urspruengliche Unreal-/Tower-Defense-Konzept wurde mit PR #1 zurueckgesetzt und durch die neue Pipeline-Struktur ersetzt.
 
 ## Aktueller Architekturstand
 
 ```text
-Elementkonfluenz/
+ValueRacer/
 ├── content-engine/     # Video-Erzeugung: Python-Brain + Remotion-Renderer
 ├── trend-engine/       # Themenfindung und Trend-Scoring, derzeit Konzept
 ├── seo-engine/         # Titel, Hashtags, Beschreibungen, derzeit Konzept
 └── distribution/       # Exporte und Posting-Scheduler, derzeit Konzept
 ```
+
+## Naming-Status
+
+- Produktname: `ValueRacer`
+- Empfohlener VPS-Zielpfad: `/srv/valueracer`
+- Alter Arbeitsname: `Elementkonfluenz`
+- GitHub-Repo-Name: kann noch `Elementkonfluenz` sein, bis er manuell in GitHub umbenannt wurde.
+- Interner Python-Brain-Paketname: aktuell noch `elementkonfluenz_brain`, spaetere Umbenennung geplant.
 
 ## Modulstatus
 
@@ -82,7 +92,7 @@ Geplant sind:
 Pfad: `content-engine/brain/`
 
 - Python: `>=3.11`
-- Paketname: `elementkonfluenz_brain`
+- Paketname: `elementkonfluenz_brain` (Legacy; spaeter auf ValueRacer-Namespace migrieren)
 - Hauptentrypoint: `python -m elementkonfluenz_brain.cli`
 - Kern-Abhaengigkeiten: `pandas`, `numpy`, `yfinance`, `pydantic`
 
@@ -117,20 +127,23 @@ Der Renderer soll keine Businesslogik enthalten. Er liest nur den `ScenePlan` un
 
 ## Wichtigste offene Punkte
 
-1. Repo-Qualitaet absichern: GitHub Actions fuer Python-Brain und Remotion-Renderer anlegen.
-2. Lokal/CI reproduzierbaren End-to-End-Render-Check definieren.
-3. Trend Engine minimal implementieren: Themenkatalog + einfacher Scoring-Prototyp.
-4. SEO Engine minimal implementieren: regelbasierte Metadaten pro Plattform.
-5. Renderer auf Zielplattform-Format pruefen: aktuell ist die Root-Komposition auf 1920x1080 gesetzt; fuer Shorts/Reels/TikTok ist spaeter 1080x1920 relevant.
-6. Weitere Video-Templates planen: Line Race, Pie-Morph, Map/Choropleth, Ranking-Tabelle.
-7. Distribution als trockenen Export-/Scheduler-Prototyp starten, bevor echte API-Posts erfolgen.
+1. Offene PRs mit altem Namen pruefen und nachziehen, bevor sie gemerged werden.
+2. Repo-Name und VPS-Verzeichnis auf `ValueRacer` umstellen, aber mit Backup und Rollback.
+3. Python-Brain-Namespace spaeter kontrolliert umbenennen oder Kompatibilitaets-Alias bereitstellen.
+4. Lokal/CI reproduzierbaren End-to-End-Render-Check definieren.
+5. Trend Engine minimal implementieren: Themenkatalog + einfacher Scoring-Prototyp.
+6. SEO Engine minimal implementieren: regelbasierte Metadaten pro Plattform.
+7. Renderer auf Zielplattform-Format pruefen: aktuell ist die Root-Komposition auf 1920x1080 gesetzt; fuer Shorts/Reels/TikTok ist spaeter 1080x1920 relevant.
+8. Weitere Video-Templates planen: Line Race, Pie-Morph, Map/Choropleth, Ranking-Tabelle.
+9. Distribution als trockenen Export-/Scheduler-Prototyp starten, bevor echte API-Posts erfolgen.
 
 ## Naechster empfohlener Entwicklungsschritt
 
-Als naechster sauberer Schritt sollte eine CI-Basis entstehen:
+Als naechster sauberer Schritt sollte die Namensmigration abgeschlossen werden:
 
-- Python: installierbares Brain-Paket pruefen und CLI importierbar machen.
-- TypeScript: `npm ci` und `npm run typecheck` fuer den Renderer.
-- Dokumentation: klarer `CONTRIBUTING`-/Run-Abschnitt fuer lokale Entwicklung.
+- Doku und VPS-Pfade auf `ValueRacer` setzen.
+- Offene PRs auf alten Namen pruefen.
+- Altes GitHub-Repository optional in GitHub selbst umbenennen.
+- Interne Paketnamen nur mit CI und Kompatibilitaetsplan umstellen.
 
-Danach ist ein kleiner, sicher testbarer MVP fuer `trend-engine` sinnvoll.
+Danach ist ein kleiner, sicher testbarer MVP fuer `seo-engine` sinnvoll.
