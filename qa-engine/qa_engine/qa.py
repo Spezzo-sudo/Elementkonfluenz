@@ -202,7 +202,7 @@ def check_youtube_metadata(metadata: dict[str, Any] | None) -> QACheck:
             error_code="QA_YOUTUBE_METADATA_MISSING",
             message="YouTube metadata is missing; skip this warning for non-YouTube runs.",
         )
-    required = ["title", "description", "tags", "hashtags", "requires_review", "ready_to_publish"]
+    required = ["title", "description", "tags", "hashtags", "requires_review"]
     missing = [key for key in required if key not in metadata]
     if missing:
         return QACheck(
@@ -212,12 +212,19 @@ def check_youtube_metadata(metadata: dict[str, Any] | None) -> QACheck:
             message="YouTube metadata is missing required fields.",
             details={"missing": missing},
         )
-    if metadata.get("requires_review") is not True or metadata.get("ready_to_publish") is not False:
+    if metadata.get("requires_review") is not True:
         return QACheck(
             name="youtube_metadata",
             status="fail",
             error_code="QA_YOUTUBE_REVIEW_FLAGS_INVALID",
-            message="YouTube metadata must require review and must not be publish-ready.",
+            message="YouTube metadata must require review.",
+        )
+    if metadata.get("ready_to_publish") is True:
+        return QACheck(
+            name="youtube_metadata",
+            status="fail",
+            error_code="QA_YOUTUBE_READY_TO_PUBLISH_UNSAFE",
+            message="YouTube metadata must not be publish-ready during dry-run stage.",
         )
     return QACheck(name="youtube_metadata", status="pass", message="YouTube metadata is review-gated.")
 
