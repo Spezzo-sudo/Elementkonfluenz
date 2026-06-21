@@ -32,6 +32,7 @@ python -m valueracer_orchestrator.cli \
   --dry-run \
   --run-mode manual_topic \
   --with-youtube-seo \
+  --with-qa \
   --topic "Gold vs S&P 500" \
   --out runs/<job_id>
 ```
@@ -43,6 +44,7 @@ python -m valueracer_orchestrator.cli \
   --dry-run \
   --run-mode market_scan \
   --with-youtube-seo \
+  --with-qa \
   --out runs/<job_id>
 ```
 
@@ -53,11 +55,12 @@ topic_brief.json
 sources.json
 metadata/youtube.json
 publish/youtube_publish_plan.json
+qa.json
 job_result.json
 logs/orchestrator.log
 ```
 
-Er postet nichts, liest keine Secrets und setzt `ready_to_publish` nicht auf true.
+Er postet nichts, liest keine Secrets, rendert nichts und setzt `ready_to_publish` nicht auf true. Wenn QA `hard_fail=true` meldet, setzt der Orchestrator `job_result.ok=false`, `stage=qa` und `error_code=QA_HARD_FAIL`.
 
 ## Run Modes
 
@@ -76,9 +79,7 @@ rerun_failed  -> Hermes wiederholt technische Fehler, wenn retryable=true
 
 ## QA Gates
 
-Die Qualitaetsregeln sind in `orchestration/QA_GATES.md` definiert.
-
-Hermes muss spaeter `qa.json` auswerten, sobald die QA Engine implementiert ist.
+Die Qualitaetsregeln sind in `orchestration/QA_GATES.md` definiert. Die erste `qa-engine` Implementierung schreibt `qa.json` direkt im Run-Ordner.
 
 Minimum-Regel:
 
@@ -119,6 +120,7 @@ Hermes
   -> content-engine/brain
   -> content-engine/renderer
   -> seo-engine
+  -> qa-engine
   -> distribution
   -> manual review or publish decision
 ```
@@ -144,6 +146,11 @@ npm run render -- --props=../../runs/<job_id>/scene_plan.json
 python -m valueracer_seo.cli \
   --dry-run \
   --run-dir runs/<job_id>
+
+python -m qa_engine.cli \
+  --dry-run \
+  --run-dir runs/<job_id> \
+  --history runs/history.jsonl
 
 python -m distribution.cli \
   --run-dir runs/<job_id> \
@@ -197,7 +204,7 @@ Jede Stage soll ein Ergebnis im selben Grundformat liefern. Das finale `job_resu
   "job_id": "2026-06-21_093000_gold-vs-sp500",
   "artifacts": ["scene_plan.json"],
   "warnings": [],
-  "requires_review": false,
+  "requires_review": true,
   "ready_to_publish": false
 }
 ```
@@ -251,6 +258,7 @@ Hermes darf:
 - Run-Ordner anlegen
 - Module in Reihenfolge ausfuehren
 - `job_result.json` lesen
+- `qa.json` lesen
 - vorhandene VPS-Environment-Variablen verwenden
 - den Nutzer bei `requires_review: true` informieren
 - fehlgeschlagene, als `retryable: true` markierte Stages neu starten
