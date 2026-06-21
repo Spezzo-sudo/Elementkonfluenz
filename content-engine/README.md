@@ -19,7 +19,13 @@ Brain-Code.
     end-to-end über `python -m value_racer_brain.cli`.
   - imperium-Ast (`value_racer_brain/imperium/`): eigenes Subpackage (`research.py`/`qa.py`/
     `scene_plan.py`/`builder.py`/`cli.py`), liest kuratierte, quellenbelegte Konzern-Recherche aus
-    `imperium/data/*.yaml` und baut daraus ein `EmpireScenePlan`. Einziger Live-Datenpunkt ist die
+    `imperium/data/*.yaml` und baut daraus ein `EmpireScenePlan`. Wie eine neue Episode
+    recherchiert/befüllt wird (Feld-für-Feld-Schema, Quellenregeln, Ownership-Genauigkeitscheck,
+    Checkliste) ist vollständig spezifiziert in
+    [`imperium/RESEARCH_GUIDE.md`](brain/value_racer_brain/imperium/RESEARCH_GUIDE.md) — diese
+    Recherche ist bewusst nicht automatisierbar (keine API für „welche Marken gehören zu Konzern
+    X"), die Spezifikation macht sie aber an einen Menschen oder eine andere KI delegierbar, ohne
+    weiteren Kontext aus diesem Projekt zu brauchen. Einziger Live-Datenpunkt ist die
     Endcard-Aktienperformance (yfinance) — Marken/Fakten/Skalenvergleich kommen ausschließlich aus
     der sourced YAML, da es dafür keine API gibt. Vier echte, recherchierte Episoden über
     verschiedene Sektoren/Regionen laufen end-to-end durch (`python -m

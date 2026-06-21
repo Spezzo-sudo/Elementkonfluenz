@@ -99,7 +99,11 @@ automatisiert ist:
 
 1. **Recherche entkoppelt von der Tagesproduktion**: eine `CompanyResearch`-YAML wird einmal
    geschrieben, dann beliebig oft vom Cross-Vertical-Scorer gezogen (wie jeder andere
-   Katalog-Eintrag) — Recherche-Tempo und Posting-Kadenz sind unabhängig voneinander.
+   Katalog-Eintrag) — Recherche-Tempo und Posting-Kadenz sind unabhängig voneinander. Wie eine
+   neue Episode recherchiert wird, ist vollständig spezifiziert in
+   [`brain/value_racer_brain/imperium/RESEARCH_GUIDE.md`](brain/value_racer_brain/imperium/RESEARCH_GUIDE.md)
+   — die Recherche selbst lässt sich dadurch delegieren (an einen Menschen oder eine andere KI),
+   ohne dass die Person/das Modell weiteren Projekt-Kontext braucht.
 2. **Strukturelle QA ist hart automatisiert**: `qa.py` prüft Pflichtfelder, Mindestanzahlen und
    dass *jede* Zahl ein `source_url` trägt, sofort beim Befüllen — nicht erst beim Rendern.
 3. **Staleness wird automatisch verfolgt, nicht von Hand**: `verified_at` +
