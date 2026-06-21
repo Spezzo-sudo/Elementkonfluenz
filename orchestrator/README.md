@@ -1,6 +1,6 @@
-# orchestrator
+# ValueRacer orchestrator
 
-Minimaler Hermes-kompatibler Dry-Run-Orchestrator.
+Minimaler Hermes-kompatibler Dry-Run-Orchestrator fuer ValueRacer.
 
 Dieses Paket ist absichtlich klein. Es verbindet noch keine echten Produktionsmodule, sondern beweist zuerst den wichtigsten Contract:
 
@@ -18,7 +18,16 @@ Der Orchestrator ist die spaetere Einstiegsschicht fuer Hermes auf dem VPS. Herm
 ```bash
 cd orchestrator
 python -m pip install -e .
-python -m elementkonfluenz_orchestrator.cli \
+python -m valueracer_orchestrator.cli \
+  --dry-run \
+  --topic "Gold vs S&P 500" \
+  --out ../runs/test-gold-sp500
+```
+
+Alternativ ueber den installierten Script-Entry:
+
+```bash
+valueracer-orchestrator \
   --dry-run \
   --topic "Gold vs S&P 500" \
   --out ../runs/test-gold-sp500
@@ -34,6 +43,10 @@ Erwartete Ausgabe:
 └── logs/
     └── orchestrator.log
 ```
+
+## Legacy-Hinweis
+
+Die interne Implementierung kann fuer eine Uebergangsphase noch den alten Paketnamen `elementkonfluenz_orchestrator` enthalten. Neue Aufrufe sollen aber `valueracer_orchestrator` oder `valueracer-orchestrator` verwenden.
 
 ## Wichtig
 
