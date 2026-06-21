@@ -17,22 +17,32 @@ Projekt.
      (`value_racer_distribution/history.py`, SQLite). Auch eine komplett grüne Episode über einen
      erstmals behandelten Konzern geht beim ersten Mal immer in die manuelle Review.
   - Nur wenn keiner der drei Gründe zutrifft: `status=auto_post`.
-  - Verifiziert per `python -m value_racer_distribution.cli gate --plan <empire_scene_plan.json>`
-    gegen die echte Nestlé-Episode: leere History → `pending_review`
+  - Verifiziert per `python -m value_racer_distribution.cli gate-imperium --plan
+    <empire_scene_plan.json>` gegen die echte Nestlé-Episode: leere History → `pending_review`
     (`first_contact_requires_manual_review`); nach `record-post` → `auto_post`; künstlich
     `sources_verified=false` bzw. `qa.hard_fail=true` gesetzt → jeweils `pending_review`, auch mit
     bereits vorhandenem Post in der History.
   - `record-post` steht für die echte Posting-Integration ein (noch nicht gebaut, siehe unten) —
     erlaubt es aber, das Gate inkl. Erstkontakt-Logik schon jetzt end-to-end zu prüfen.
-- **chart_race-Hybrid-Gate** und die eigentliche Plattform-Anbindung/Posting-Scheduler sind noch
-  nicht gebaut (siehe „Geplant").
+- **chart_race-Hybrid-Gate** (`value_racer_distribution/gate.py: evaluate_chart_race_gate`) —
+  weniger streng als das Imperium-Gate (Live-Marktdaten, kein Recherche-Risiko, daher keine
+  Erstkontakt-Regel). Zwei voneinander unabhängige Gründe zwingen `pending_review`:
+  1. `qa.hard_fail` — strukturelle QA fehlgeschlagen (Event-Overlap, Asset-Anzahl, Time-Map-Endpunkt, ...).
+  2. Der `advisory_wording`-Eintrag in `qa.results` fehlt oder hat `passed == false` — der Titel
+     klingt nach Anlageberatung (`value_racer_brain/advisory.py`). Der Projekt-Plan sieht diesen
+     Check eigentlich auf einem von seo-engine erzeugten `PostingPackage` vor; da seo-engine noch
+     nicht existiert und der Brain den Check schon heute selbst ausführt und sein Ergebnis direkt
+     in `ScenePlan.qa.results` einbettet, liest das Gate ihn vorerst von dort — sobald seo-engine
+     einen eigenen `PostingPackage`-Contract liefert, wird die Quelle umgehängt.
+  - Verifiziert per `python -m value_racer_distribution.cli gate-chart-race --plan
+    <scene_plan.json>` gegen vier synthetische Fälle: clean (hard_fail=false, advisory bestanden)
+    → `auto_post`; `hard_fail=true` → `pending_review`; advisory geflaggt → `pending_review`;
+    `advisory_wording`-Eintrag fehlt komplett → `pending_review` (fail closed, kein impliziter
+    Pass bei fehlendem Check).
+- Die eigentliche Plattform-Anbindung/Posting-Scheduler sind noch nicht gebaut (siehe „Geplant").
 
 ## Geplant
 
-- **Hybrid-Freigabe-Gate (chart_race)**: `qa_hard_fail == false` UND Advisory-Wording-Check
-  bestanden → Auto-Post, sonst Review-Queue — analog zum Imperium-Gate, aber ohne dessen
-  Erstkontakt-Regel (chart_race-Themen sind Live-Daten ohne Recherche-Risiko).
-  Voraussetzung: seo-engine liefert den Advisory-Check als `PostingPackage`.
 - Review-Queue als sichtbarer Workflow-Status (`pending_review` → `approved`/`rejected` →
   `scheduled` → `posted`), nicht nur als Rückgabewert der Gate-Funktion.
 - Pro Plattform ein eigener, wasserzeichenfreier Export (kein Wiederverwenden von z.B. TikTok-Downloads auf YouTube/Instagram — kostet 30–50% Reichweite).
