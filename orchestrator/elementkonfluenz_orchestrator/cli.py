@@ -28,7 +28,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--locale", default="de", help="Topic locale. Defaults to de.")
     parser.add_argument("--period-days", type=int, default=1825, help="Lookback period placeholder for manual_topic topic briefs.")
     parser.add_argument("--dry-run", action="store_true", help="Required safety flag. No publish-capable mode exists yet.")
-    parser.add_argument("--history", default=None, help="History JSONL path for market_scan. Defaults to <runs-dir>/history.jsonl.")
+    parser.add_argument("--history", default=None, help="History JSONL path for market_scan/QA. Defaults to <runs-dir>/history.jsonl.")
     parser.add_argument("--cooldown-days", type=int, default=14, help="Topic cooldown in days for market_scan.")
     parser.add_argument("--asset-pair-cooldown-days", type=int, default=21, help="Asset-pair cooldown in days for market_scan.")
     parser.add_argument("--max-same-video-type-in-row", type=int, default=2, help="Consecutive video-type limit for market_scan.")
@@ -42,6 +42,16 @@ def build_parser() -> argparse.ArgumentParser:
         "--with-youtube-seo",
         action="store_true",
         help="Also generate dry-run YouTube metadata and publish-plan artifacts. Requires valueracer_seo to be installed.",
+    )
+    parser.add_argument(
+        "--with-qa",
+        action="store_true",
+        help="Also run dry-run QA gates and write qa.json. Requires qa-engine to be installed.",
+    )
+    parser.add_argument(
+        "--qa-no-require-youtube",
+        action="store_true",
+        help="When --with-qa is used, do not fail QA if YouTube artifacts are missing.",
     )
     return parser
 
@@ -58,6 +68,28 @@ def run_youtube_seo_dry_run(out_dir: Path) -> dict:
         topic_brief_path=out_dir / "topic_brief.json",
         sources_path=out_dir / "sources.json",
     )
+
+
+def resolve_history_path(args: argparse.Namespace, out_dir: Path) -> Path:
+    runs_dir = out_dir.parent
+    return Path(args.history) if args.history else runs_dir / "history.jsonl"
+
+
+def run_qa_dry_run(args: argparse.Namespace, *, out_dir: Path) -> dict:
+    """Run the optional QA dry-run stage and write qa.json.
+
+    The import is intentionally lazy so the base orchestrator can still run without the QA package.
+    """
+    from qa_engine.qa import evaluate_run, write_json
+
+    history_path = resolve_history_path(args, out_dir)
+    qa_result = evaluate_run(
+        out_dir,
+        require_youtube=not args.qa_no_require_youtube,
+        history_path=history_path if history_path.exists() else None,
+    )
+    write_json(out_dir / "qa.json", qa_result)
+    return qa_result
 
 
 def run_market_scan_dry_run(args: argparse.Namespace, *, out_dir: Path, job_id: str) -> JobResult:
@@ -78,8 +110,7 @@ def run_market_scan_dry_run(args: argparse.Namespace, *, out_dir: Path, job_id: 
     logs_dir = out_dir / "logs"
     logs_dir.mkdir(exist_ok=True)
 
-    runs_dir = out_dir.parent
-    history_path = Path(args.history) if args.history else runs_dir / "history.jsonl"
+    history_path = resolve_history_path(args, out_dir)
     candidates = load_catalog(DEFAULT_CATALOG_PATH)
     history = read_history(history_path)
     selected, rejected = choose_candidate(
@@ -173,6 +204,8 @@ def validate_args(args: argparse.Namespace) -> list[str]:
         errors.append("--dry-run is required; publish-capable orchestration is intentionally not implemented")
     if args.run_mode == "manual_topic" and not args.topic:
         errors.append("--topic is required when --run-mode manual_topic")
+    if args.qa_no_require_youtube and not args.with_qa:
+        errors.append("--qa-no-require-youtube requires --with-qa")
     if args.period_days < 1:
         errors.append("--period-days must be >= 1")
     if args.cooldown_days < 0:
@@ -229,12 +262,34 @@ def main(argv: list[str] | None = None) -> int:
             result.write(out_dir / "job_result.json")
             with (out_dir / "logs" / "orchestrator.log").open("a", encoding="utf-8") as log_file:
                 log_file.write("generated YouTube SEO dry-run artifacts\n")
+
+        if args.with_qa and result.ok:
+            qa_result = run_qa_dry_run(args, out_dir=out_dir)
+            if "qa.json" not in result.artifacts:
+                result.artifacts.append("qa.json")
+            qa_warnings = qa_result.get("warnings", [])
+            result.warnings.extend(warning for warning in qa_warnings if warning not in result.warnings)
+            if qa_result.get("hard_fail"):
+                result.ok = False
+                result.stage = "qa"
+                result.error_code = "QA_HARD_FAIL"
+                result.message = "Dry-run QA completed with hard_fail=true. Review required before any further step."
+            else:
+                result.message = "Dry-run job folder created, YouTube SEO artifacts generated, and QA passed."
+            result.requires_review = True
+            result.ready_to_publish = False
+            result.write(out_dir / "job_result.json")
+            with (out_dir / "logs" / "orchestrator.log").open("a", encoding="utf-8") as log_file:
+                log_file.write("generated QA dry-run artifact\n")
     except ModuleNotFoundError as exc:
         if args.with_youtube_seo and exc.name and exc.name.startswith("valueracer_seo"):
             print("error: --with-youtube-seo requires the seo-engine package to be installed", file=sys.stderr)
             return 2
         if args.run_mode == "market_scan" and exc.name and exc.name.startswith("trend_engine"):
             print("error: --run-mode market_scan requires the trend-engine package to be installed", file=sys.stderr)
+            return 2
+        if args.with_qa and exc.name and exc.name.startswith("qa_engine"):
+            print("error: --with-qa requires the qa-engine package to be installed", file=sys.stderr)
             return 2
         print(f"error: missing required module: {exc}", file=sys.stderr)
         return 1
@@ -243,7 +298,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False))
-    return 0
+    return 1 if not result.ok else 0
 
 
 if __name__ == "__main__":
