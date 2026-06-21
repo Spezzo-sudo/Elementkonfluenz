@@ -2,11 +2,11 @@
 
 Stand: 2026-06-21
 
-Dieser Ordner beschreibt die YouTube-Schicht von Elementkonfluenz. Ziel ist noch kein Upload-Code, sondern ein sauberer Vertrag fuer SEO, Hermes, spaetere Distribution und Analytics.
+Dieser Ordner beschreibt die YouTube-Schicht von **ValueRacer**. Ziel ist noch kein Upload-Code, sondern ein sauberer Vertrag fuer SEO, Hermes, spaetere Distribution und Analytics.
 
 ## Warum eine eigene YouTube-Schicht?
 
-YouTube ist nicht nur ein Upload-Ziel. Fuer Elementkonfluenz besteht YouTube aus vier getrennten Ebenen:
+YouTube ist nicht nur ein Upload-Ziel. Fuer ValueRacer besteht YouTube aus vier getrennten Ebenen:
 
 1. Content Packaging: Titel, Thumbnail-Text, Beschreibung, Tags, Hashtags, Quellenhinweis, Disclaimer.
 2. Publishing: Upload, Privacy-Status, Scheduling, Thumbnail, Captions, Fehlerbehandlung.
@@ -48,4 +48,4 @@ Hermes entscheidet dann anhand der maschinenlesbaren Felder, ob gestoppt, review
 
 ## Keine Secrets im Repo
 
-OAuth Credentials, Refresh Tokens, Client Secrets, API Keys und Google Ads Developer Tokens gehoeren niemals ins Git-Repo. Sie muessen auf dem VPS ueber Environment-Variablen oder einen Secret-Store bereitgestellt werden.
+OAuth Credentials, Refresh Tokens, Client Secrets, API Keys und Google Ads Developer Tokens gehoeren niemals ins Git-Repo. Sie muessen auf dem VPS ueber vorhandene Hermes-/ValueRacer-Environment-Variablen oder einen Secret-Store bereitgestellt werden.
