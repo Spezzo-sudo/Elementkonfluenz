@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "valueracer_seo"
+version = "0.1.0"
+description = "Dry-run SEO metadata generator for ValueRacer platform packages."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+valueracer-seo = "valueracer_seo.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["valueracer_seo"]
