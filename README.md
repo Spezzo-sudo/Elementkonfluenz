@@ -1,8 +1,6 @@
-# Elementkonfluenz
+# ValueRacer
 
 Automatisierte Pipeline, die täglich datengetriebene Short-Videos (Bar/Line-Race-Charts, Rankings, Maps) für YouTube Shorts, TikTok, Instagram Reels und X produziert und verteilt. Themenwahl orientiert sich an aktuellen gesellschaftlichen/finanziellen Trends statt an Zufall.
-
-> Arbeitstitel — Projekt wird umbenannt, sobald sich ein endgültiger Name ergibt.
 
 ## Module
 

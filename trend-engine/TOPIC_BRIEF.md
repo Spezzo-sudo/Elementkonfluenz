@@ -60,7 +60,7 @@ nach `content_type`.
 
 ## Anti-Repetition-Garantie
 
-Der Scorer (`elementkonfluenz_trend.scorer`) garantiert:
+Der Scorer (`value_racer_trend.scorer`) garantiert:
 1. `content_type`-Verhältnis konvergiert auf die konfigurierte Gewichtung (Default 4:1
    chart_race:imperium) über einen deficit-basierten Scheduler — reines Zufalls-Sampling
    mit einem Wiederholungs-Cap verzerrt diese Quote nachweislich nach oben (empirisch
@@ -73,4 +73,4 @@ Der Scorer (`elementkonfluenz_trend.scorer`) garantiert:
 4. Innerhalb eines `content_type` wird die Kategorie/Sektor bevorzugt, die am längsten
    nicht gewählt wurde (Tie-Breaker bei gleichem Cooldown-Status).
 
-Verifizierbar über `python -m elementkonfluenz_trend.cli --simulate 200`.
+Verifizierbar über `python -m value_racer_trend.cli --simulate 200`.

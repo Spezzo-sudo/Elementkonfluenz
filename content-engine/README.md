@@ -6,9 +6,9 @@ Rendert die eigentlichen Videos. Aufgeteilt in **Brain** (Python, Entscheidungsl
 
 ## Status
 
-- [`brain/`](brain) — Python-Paket `elementkonfluenz_brain`. Daten (yfinance), Kamera-Policy,
+- [`brain/`](brain) — Python-Paket `value_racer_brain`. Daten (yfinance), Kamera-Policy,
   Zeitachsen-Mapping, Event-Erkennung, Dauer-Planung/QA und Advisory-Wording-Check sind aus der
-  alten Engine portiert und laufen end-to-end über `python -m elementkonfluenz_brain.cli`.
+  alten Engine portiert und laufen end-to-end über `python -m value_racer_brain.cli`.
 - [`renderer/`](renderer) — Remotion-Projekt, das `ScenePlan`-JSON liest und per `interpolate()`
   echte Kamera-/Event-Übergänge rendert (kein Keyframe-Snapping, kein Ruckeln). Verifiziert per
   `npm run render -- --props=<scene_plan.json>`.

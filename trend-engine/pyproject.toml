@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "elementkonfluenz_trend"
+name = "value_racer_trend"
 version = "0.1.0"
 description = "Cross-vertical topic scorer producing versioned TopicBrief JSON documents for the content-engine."
 requires-python = ">=3.11"
@@ -12,4 +12,4 @@ dependencies = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["elementkonfluenz_trend"]
+packages = ["value_racer_trend"]

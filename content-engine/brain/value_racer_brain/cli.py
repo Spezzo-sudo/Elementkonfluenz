@@ -1,4 +1,4 @@
-"""CLI entry point: python -m elementkonfluenz_brain.cli --tickers ... --days N --out path.json"""
+"""CLI entry point: python -m value_racer_brain.cli --tickers ... --days N --out path.json"""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from .builder import build_scene_plan
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(prog="elementkonfluenz_brain.cli", description="Build a ScenePlan JSON document.")
+    parser = argparse.ArgumentParser(prog="value_racer_brain.cli", description="Build a ScenePlan JSON document.")
     parser.add_argument("--tickers", required=True, help="Comma-separated tickers, e.g. BTC-USD,^GSPC")
     parser.add_argument("--days", type=int, default=1825, help="Lookback period in days")
     parser.add_argument("--out", required=True, help="Output path for scene_plan.json")
