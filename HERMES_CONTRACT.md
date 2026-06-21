@@ -2,7 +2,15 @@
 
 Stand: 2026-06-21
 
-Dieses Dokument definiert, wie Hermes spaeter Elementkonfluenz auf dem VPS automatisiert steuern soll. Ziel ist eine einfache, robuste Orchestrierung: klare Befehle, klare Input-/Output-Dateien, keine versteckten manuellen Schritte und keine Datenverluste.
+Dieses Dokument definiert, wie Hermes spaeter **ValueRacer** auf dem VPS automatisiert steuern soll. Ziel ist eine einfache, robuste Orchestrierung: klare Befehle, klare Input-/Output-Dateien, keine versteckten manuellen Schritte und keine Datenverluste.
+
+## Naming
+
+- Produktname: `ValueRacer`
+- Empfohlener VPS-Pfad: `/srv/valueracer`
+- Alter Arbeitsname: `Elementkonfluenz`
+
+Der alte Name kann noch in historischen Commits, offenen PRs oder internen Python-Paketnamen vorkommen. Neue Deployments, Run-Pfade und Hermes-Konfigurationen sollen ab jetzt `ValueRacer` verwenden.
 
 ## Leitprinzipien
 
@@ -13,6 +21,7 @@ Dieses Dokument definiert, wie Hermes spaeter Elementkonfluenz auf dem VPS autom
 5. Fehler stoppen die Pipeline sicher und nachvollziehbar.
 6. Auto-Posting bleibt deaktiviert, bis Dry-Runs mehrfach erfolgreich und manuell geprueft wurden.
 7. Bestehende VPS-Daten werden niemals ungefragt ueberschrieben oder geloescht.
+8. Bestehende Hermes-Secrets und `.env`-Dateien werden gelesen, aber nicht automatisch neu erzeugt, rotiert oder ueberschrieben.
 
 ## Ziel-Pipeline
 
@@ -153,6 +162,7 @@ Hermes darf:
 - Run-Ordner anlegen
 - Module in Reihenfolge ausfuehren
 - `job_result.json` lesen
+- vorhandene VPS-Environment-Variablen verwenden
 - den Nutzer bei `requires_review: true` informieren
 - fehlgeschlagene, als `retryable: true` markierte Stages neu starten
 
@@ -161,6 +171,7 @@ Hermes darf nicht:
 - alte Runs loeschen
 - bestehende Produktionsdaten ueberschreiben
 - API-Keys veraendern
+- `.env`-Dateien ueberschreiben
 - Auto-Posting aktivieren
 - fehlerhafte Runs trotzdem veroeffentlichen
 - Content-Regeln umgehen
@@ -169,17 +180,28 @@ Hermes darf nicht:
 
 Spaetere Deployments sollen sensible Daten nur ueber Environment-Variablen oder einen separaten Secret-Store laden. Keine Secrets im Repo.
 
-Vorgesehene Beispiele:
+Neue Variablen sollen den `VALUERACER_` Prefix verwenden:
 
 ```text
-ELEMENTKONFLUENZ_ENV=production|staging|local
-ELEMENTKONFLUENZ_RUNS_DIR=/srv/elementkonfluenz/runs
-ELEMENTKONFLUENZ_DRY_RUN=true
+VALUERACER_ENV=production|staging|local
+VALUERACER_RUNS_DIR=/srv/valueracer/runs
+VALUERACER_LOGS_DIR=/srv/valueracer/logs
+VALUERACER_DRY_RUN=true
 YOUTUBE_CLIENT_ID=...
 TIKTOK_CLIENT_ID=...
 INSTAGRAM_CLIENT_ID=...
 X_API_KEY=...
 ```
+
+Legacy-Variablen mit altem Prefix duerfen in einer Uebergangsphase gelesen werden, wenn sie auf dem VPS bereits existieren:
+
+```text
+ELEMENTKONFLUENZ_ENV=production|staging|local
+ELEMENTKONFLUENZ_RUNS_DIR=/srv/elementkonfluenz/runs
+ELEMENTKONFLUENZ_DRY_RUN=true
+```
+
+Regel: lesen ja, automatisch veraendern nein.
 
 ## Versionierung
 
