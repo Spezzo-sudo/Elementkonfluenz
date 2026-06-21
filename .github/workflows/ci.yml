@@ -39,6 +39,54 @@ jobs:
       - name: CLI help smoke test
         run: python -m elementkonfluenz_brain.cli --help
 
+  trend-engine-smoke-test:
+    name: ValueRacer trend-engine market scan smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: trend-engine/pyproject.toml
+
+      - name: Install trend-engine package
+        run: python -m pip install -e trend-engine
+
+      - name: CLI help smoke test
+        run: python -m trend_engine.cli --help
+
+      - name: Select market-scan topic
+        run: |
+          python -m trend_engine.cli \
+            --dry-run \
+            --mode market_scan \
+            --out runs/ci-market-scan/topic_brief.json \
+            --sources-out runs/ci-market-scan/sources.json \
+            --history runs/history.jsonl \
+            --write-history
+
+      - name: Verify trend artifacts
+        run: |
+          test -f runs/ci-market-scan/topic_brief.json
+          test -f runs/ci-market-scan/sources.json
+          test -f runs/history.jsonl
+
+      - name: Verify cooldown fallback selects a different topic
+        run: |
+          python -m trend_engine.cli \
+            --dry-run \
+            --mode market_scan \
+            --out runs/ci-market-scan-2/topic_brief.json \
+            --sources-out runs/ci-market-scan-2/sources.json \
+            --history runs/history.jsonl \
+            --write-history
+          test -f runs/ci-market-scan-2/topic_brief.json
+          test -f runs/ci-market-scan-2/sources.json
+
   orchestrator-smoke-test:
     name: ValueRacer orchestrator dry-run smoke test
     runs-on: ubuntu-latest
