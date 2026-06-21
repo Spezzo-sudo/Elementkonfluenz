@@ -25,13 +25,24 @@ Der alte Name kann noch in historischen Commits, offenen PRs oder internen Pytho
 
 ## Aktueller sicherer Dry-Run
 
-Der aktuell implementierte sichere Hermes-Loop ist:
+Der aktuell implementierte sichere Hermes-Loop fuer ein manuelles Thema ist:
 
 ```bash
 python -m valueracer_orchestrator.cli \
   --dry-run \
+  --run-mode manual_topic \
   --with-youtube-seo \
   --topic "Gold vs S&P 500" \
+  --out runs/<job_id>
+```
+
+Der aktuell implementierte sichere Hermes-Loop fuer automatische Katalogauswahl ist:
+
+```bash
+python -m valueracer_orchestrator.cli \
+  --dry-run \
+  --run-mode market_scan \
+  --with-youtube-seo \
   --out runs/<job_id>
 ```
 
@@ -61,7 +72,7 @@ trend_scan    -> ValueRacer waehlt aus Trend-/Nachfrage-Signalen
 rerun_failed  -> Hermes wiederholt technische Fehler, wenn retryable=true
 ```
 
-Nur `manual_topic` ist aktuell als Dry-Run implementiert. `market_scan` und `trend_scan` sind definierte naechste Ausbaustufen.
+`manual_topic` und `market_scan` sind aktuell als Dry-Run implementiert. `trend_scan` ist eine definierte naechste Ausbaustufe.
 
 ## QA Gates
 
@@ -118,6 +129,8 @@ Die genauen CLI-Module werden schrittweise implementiert. Der Contract legt bere
 
 ```bash
 python -m trend_engine.cli \
+  --dry-run \
+  --mode market_scan \
   --out runs/<job_id>/topic_brief.json \
   --sources-out runs/<job_id>/sources.json
 
