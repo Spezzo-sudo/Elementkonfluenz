@@ -55,6 +55,7 @@ def create_dry_run_job(
 
     topic_brief = {
         "contract_version": "0.1",
+        "job_id": resolved_job_id,
         "topic_id": slugify(topic),
         "title": topic,
         "hook": topic,
@@ -96,7 +97,7 @@ def create_dry_run_job(
             "wrote topic_brief.json",
             "wrote sources.json",
             "wrote job_result.json",
-            "no render, SEO, distribution, or publish step executed",
+            "no render, distribution, or publish step executed",
             "",
         ]
     )
@@ -115,7 +116,7 @@ def create_dry_run_job(
             "logs/orchestrator.log",
         ],
         warnings=[
-            "Dry-run only: no market data fetched, no video rendered, no metadata generated, no posting attempted.",
+            "Dry-run only: no market data fetched, no video rendered, no posting attempted.",
             "Placeholder assets must be replaced by trend-engine output before production use.",
         ],
         message="Dry-run job folder created successfully.",
