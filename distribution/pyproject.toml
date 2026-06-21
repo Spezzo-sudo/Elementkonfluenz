@@ -1,0 +1,13 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "value_racer_distribution"
+version = "0.1.0"
+description = "Distribution gate + posting history. Reads JSON contracts only, never imports content-engine/trend-engine internals."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["value_racer_distribution"]
