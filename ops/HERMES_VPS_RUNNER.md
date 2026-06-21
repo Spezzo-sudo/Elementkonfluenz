@@ -4,6 +4,23 @@ This runbook describes how Hermes can run the current safest ValueRacer loop on 
 
 The runner remains dry-run only. It does not publish, render, call platform APIs, rotate secrets, overwrite `.env` files, or modify existing services.
 
+## Separation first
+
+Before using this runner outside the GitHub test checkout, read and follow:
+
+```text
+ops/SEPARATION_POLICY.md
+```
+
+Current rule:
+
+```text
+/root/valueracer          = existing VPS project, do not touch
+/srv/valueracer_repo_test = GitHub test line, dry-run only
+```
+
+The templates in this folder are not activation approval. They must not be installed, enabled, or used against production paths until a separate migration plan is approved.
+
 ## Current safe command
 
 The underlying command is:
@@ -27,7 +44,7 @@ It writes one new run folder per execution and logs to `logs/<job_id>.log`.
 
 ## Required VPS layout
 
-Recommended target layout:
+Recommended future target layout after explicit migration approval:
 
 ```text
 /srv/valueracer/
@@ -40,14 +57,18 @@ Recommended target layout:
 └── logs/
 ```
 
+Do not create or use this future production path while the approved test path is still `/srv/valueracer_repo_test`.
+
 Do not overwrite the legacy `/root/valueracer` project. Keep it running until migration is explicitly approved.
 
 ## Install packages
 
+Only for an approved checkout path. For the current test line, use `/srv/valueracer_repo_test`.
+
 From the repo root:
 
 ```bash
-cd /srv/valueracer
+cd /srv/valueracer_repo_test
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install --upgrade pip
@@ -59,11 +80,20 @@ python -m pip install -e qa-engine
 
 ## Manual dry-run test
 
+Current approved test command:
+
 ```bash
-cd /srv/valueracer
+cd /srv/valueracer_repo_test
 . .venv/bin/activate
-bash ops/hermes_valueracer_dry_run.sh
+python -m valueracer_orchestrator.cli \
+  --dry-run \
+  --run-mode market_scan \
+  --with-youtube-seo \
+  --with-qa \
+  --out runs/<job_id>
 ```
+
+The wrapper script is for future approved runner testing, not for activation against production paths.
 
 Expected artifacts:
 
@@ -116,7 +146,9 @@ ops/systemd/valueracer-dry-run.service
 ops/systemd/valueracer-dry-run.timer
 ```
 
-Manual install example:
+Do not install or enable these templates while the GitHub line is still only approved for `/srv/valueracer_repo_test` dry-runs.
+
+Future manual install example after explicit approval:
 
 ```bash
 sudo cp /srv/valueracer/ops/systemd/valueracer-dry-run.service /etc/systemd/system/valueracer-dry-run.service
@@ -141,7 +173,9 @@ A cron template is provided under:
 ops/cron/valueracer-dry-run.cron
 ```
 
-Manual install example:
+Do not install this template while the GitHub line is still only approved for `/srv/valueracer_repo_test` dry-runs.
+
+Future manual install example after explicit approval:
 
 ```bash
 crontab -l > /tmp/valueracer.cron.current 2>/dev/null || true
