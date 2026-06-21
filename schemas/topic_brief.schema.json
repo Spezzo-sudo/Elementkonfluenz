@@ -1,0 +1,75 @@
+{
+  "title": "Elementkonfluenz Topic Brief",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "topic_id",
+    "title",
+    "assets",
+    "period_days",
+    "locale",
+    "content_angle",
+    "risk_level"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "default": "0.1"
+    },
+    "topic_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hook": {
+      "type": "string"
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string"
+      }
+    },
+    "period_days": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "locale": {
+      "type": "string",
+      "default": "de"
+    },
+    "content_angle": {
+      "type": "string",
+      "enum": [
+        "comparison",
+        "ranking",
+        "trend_explainer",
+        "macro_context",
+        "market_history"
+      ]
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "requires_review": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}
