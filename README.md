@@ -18,6 +18,7 @@ Cross-Vertical-Scorer (`chart_race` vs. `imperium`, siehe
 [`trend-engine/README.md`](trend-engine/README.md)). Für die zweite Vertical **imperium** steht
 das Brain-Subpackage (`EmpireScenePlan`-Contract, sourced Recherche, strukturelle QA,
 Staleness-Tracking) UND der Renderer (`EmpireScenePlanComposition`, sieben Phasen-Komponenten)
-mit einer ersten echten Episode (Nestlé) end-to-end verifiziert — Details in
-[`content-engine/README.md`](content-engine/README.md). seo-engine und distribution sind noch
-Konzeptphase, Details in den jeweiligen README-Dateien der Module.
+mit vier echten, recherchierten Episoden über vier Sektoren/Regionen (Nestlé, LVMH, Alphabet,
+Toyota) end-to-end verifiziert — Details in [`content-engine/README.md`](content-engine/README.md).
+seo-engine und distribution sind noch Konzeptphase, Details in den jeweiligen README-Dateien der
+Module.

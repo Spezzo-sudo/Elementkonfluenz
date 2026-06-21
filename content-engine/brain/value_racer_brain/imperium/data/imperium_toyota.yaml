@@ -1,0 +1,122 @@
+# Imperium research episode — Toyota Motor Corporation
+# Every numeric/historical claim below carries source_url + source_date.
+# Researched via live web search on 2026-06-21; re-verify before reuse if `verified_at` is
+# older than `verify_interval_days`. Deliberately excludes minority-stake automakers (Subaru
+# 20%, Mazda 5.1%, Suzuki 4.9%) and Toyota Tsusho (23.5%, equity-method affiliate, not a
+# subsidiary) — and Toyota Industries, which historically sits upstream of Toyota Motor in the
+# group's cross-shareholding structure, not downstream — to avoid overstating ownership. KINTO
+# is also excluded: it is a joint venture with Sumitomo Mitsui Auto Service, not wholly owned.
+
+topic_id: imperium_toyota
+sector: automotive
+region: APAC
+
+owner:
+  display_name: "Toyota"
+  legal_name: "Toyota Motor Corporation"
+  hq_city: "Toyota City, Japan"
+  founded_year: 1937
+  ticker: "7203.T"
+
+brands:
+  - name: "Lexus"
+    category: "Luxusautos"
+    acquired_year: 1989
+    color_primary: "#2B2B2B"
+    color_text: "#FFFFFF"
+    surprise_factor: 1
+    source_url: "https://en.wikipedia.org/wiki/Lexus"
+    source_date: 2026-06-21
+  - name: "GAZOO Racing"
+    category: "Motorsport"
+    acquired_year: 2017
+    color_primary: "#E60012"
+    color_text: "#FFFFFF"
+    surprise_factor: 3
+    source_url: "https://en.wikipedia.org/wiki/Toyota_Gazoo_Racing"
+    source_date: 2026-06-21
+  - name: "Daihatsu"
+    category: "Kleinwagen"
+    acquired_year: 2016
+    color_primary: "#005BAC"
+    color_text: "#FFFFFF"
+    surprise_factor: 4
+    source_url: "https://en.wikipedia.org/wiki/Daihatsu"
+    source_date: 2026-06-21
+  - name: "Hino Motors"
+    category: "Lkw & Busse"
+    acquired_year: 2001
+    color_primary: "#8B1A1A"
+    color_text: "#FFFFFF"
+    surprise_factor: 5
+    source_url: "https://en.wikipedia.org/wiki/Hino_Motors"
+    source_date: 2026-06-21
+  - name: "Toyota Financial Services"
+    category: "Finanzdienstleistungen"
+    acquired_year: 2000
+    color_primary: "#006341"
+    color_text: "#FFFFFF"
+    surprise_factor: 6
+    source_url: "https://en.wikipedia.org/wiki/Toyota_Financial_Services"
+    source_date: 2026-06-21
+  - name: "Century"
+    category: "Ultra-Luxus"
+    acquired_year: 2025
+    color_primary: "#1A1A1A"
+    color_text: "#D4AF37"
+    surprise_factor: 7
+    source_url: "https://en.wikipedia.org/wiki/Century_(marque)"
+    source_date: 2026-06-21
+  - name: "Woven by Toyota"
+    category: "Software & Mobility"
+    acquired_year: 2020
+    color_primary: "#00BCD4"
+    color_text: "#000000"
+    surprise_factor: 9
+    source_url: "https://en.wikipedia.org/wiki/Woven_by_Toyota,_Inc."
+    source_date: 2026-06-21
+
+facts:
+  - label: "UMSATZ"
+    value: 45.1
+    unit: "Bio. JPY"
+    as_of_year: 2024
+    description: "Konzernumsatz Geschäftsjahr 2024 (zum 31. März)"
+    source_url: "https://www.sec.gov/Archives/edgar/data/0001094517/000119312524167462/d807954d20f.htm"
+    source_date: 2026-06-21
+  - label: "MITARBEITER"
+    value: 380793
+    unit: "Mitarbeiter"
+    as_of_year: 2024
+    description: "Beschäftigte weltweit (konsolidiert)"
+    source_url: "https://www.macrotrends.net/stocks/charts/TM/toyota/number-of-employees"
+    source_date: 2026-06-21
+  - label: "VERKAUFT"
+    value: 10.8
+    unit: "Mio. Fahrzeuge"
+    as_of_year: 2024
+    description: "Weltweit verkaufte Fahrzeuge — meistverkaufter Autobauer, fünftes Jahr in Folge"
+    source_url: "https://www.cnbc.com/2025/01/30/toyota-remains-worlds-top-selling-automaker.html"
+    source_date: 2026-06-21
+
+scale_comparison:
+  headline: "Mehr wert als Mercedes-Benz und Volkswagen zusammen"
+  unit: "Mrd. USD"
+  rows:
+    - label: "Toyota"
+      value: 205.96
+      source_url: "https://companiesmarketcap.com/toyota/marketcap/"
+      source_date: 2026-06-21
+    - label: "Mercedes-Benz"
+      value: 49.75
+      source_url: "https://companiesmarketcap.com/mercedes-benz-group/marketcap/"
+      source_date: 2026-06-21
+    - label: "Volkswagen"
+      value: 46.28
+      source_url: "https://companiesmarketcap.com/volkswagen/marketcap/"
+      source_date: 2026-06-21
+
+researched_at: 2026-06-21
+verified: true
+verified_at: 2026-06-21
+verify_interval_days: 365

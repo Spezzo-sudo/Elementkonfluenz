@@ -1,0 +1,126 @@
+# Imperium research episode — Alphabet Inc.
+# Every numeric/historical claim below carries source_url + source_date.
+# Researched via live web search on 2026-06-21; re-verify before reuse if `verified_at` is
+# older than `verify_interval_days`.
+
+topic_id: imperium_alphabet
+sector: tech
+region: US
+
+owner:
+  display_name: "Alphabet"
+  legal_name: "Alphabet Inc."
+  hq_city: "Mountain View, USA"
+  founded_year: 2015
+  ticker: "GOOGL"
+
+brands:
+  - name: "YouTube"
+    category: "Video"
+    acquired_year: 2006
+    color_primary: "#FF0000"
+    color_text: "#FFFFFF"
+    surprise_factor: 1
+    source_url: "https://en.wikipedia.org/wiki/History_of_YouTube"
+    source_date: 2026-06-21
+  - name: "Android"
+    category: "Betriebssystem"
+    acquired_year: 2005
+    color_primary: "#3DDC84"
+    color_text: "#000000"
+    surprise_factor: 2
+    source_url: "https://en.wikipedia.org/wiki/Android_(operating_system)"
+    source_date: 2026-06-21
+  - name: "Waymo"
+    category: "Autonomes Fahren"
+    acquired_year: 2016
+    color_primary: "#00A1E0"
+    color_text: "#FFFFFF"
+    surprise_factor: 4
+    source_url: "https://en.wikipedia.org/wiki/Waymo"
+    source_date: 2026-06-21
+  - name: "Nest"
+    category: "Smart Home"
+    acquired_year: 2014
+    color_primary: "#2C3E50"
+    color_text: "#FFFFFF"
+    surprise_factor: 5
+    source_url: "https://en.wikipedia.org/wiki/Google_Nest"
+    source_date: 2026-06-21
+  - name: "Fitbit"
+    category: "Wearables"
+    acquired_year: 2021
+    color_primary: "#00B0B9"
+    color_text: "#FFFFFF"
+    surprise_factor: 6
+    source_url: "https://en.wikipedia.org/wiki/Fitbit"
+    source_date: 2026-06-21
+  - name: "Google DeepMind"
+    category: "KI-Forschung"
+    acquired_year: 2014
+    color_primary: "#1A73E8"
+    color_text: "#FFFFFF"
+    surprise_factor: 7
+    source_url: "https://en.wikipedia.org/wiki/Google_DeepMind"
+    source_date: 2026-06-21
+  - name: "Verily"
+    category: "Biowissenschaften"
+    acquired_year: 2015
+    color_primary: "#6C63FF"
+    color_text: "#FFFFFF"
+    surprise_factor: 8
+    source_url: "https://en.wikipedia.org/wiki/Verily"
+    source_date: 2026-06-21
+  - name: "Wing"
+    category: "Drohnen-Lieferung"
+    acquired_year: 2018
+    color_primary: "#F4B400"
+    color_text: "#000000"
+    surprise_factor: 9
+    source_url: "https://en.wikipedia.org/wiki/Wing_(company)"
+    source_date: 2026-06-21
+
+facts:
+  - label: "UMSATZ"
+    value: 350.0
+    unit: "Mrd. USD"
+    as_of_year: 2024
+    description: "Konzernumsatz Geschäftsjahr 2024"
+    source_url: "https://www.visualcapitalist.com/alphabets-revenue-breakdown-in-2024/"
+    source_date: 2026-06-21
+  - label: "MITARBEITER"
+    value: 183323
+    unit: "Mitarbeiter"
+    as_of_year: 2024
+    description: "Beschäftigte weltweit (Stand 31.12.2024)"
+    source_url: "https://en.wikipedia.org/wiki/Alphabet_Inc."
+    source_date: 2026-06-21
+  - label: "ANDROID"
+    value: 3.9
+    unit: "Mrd. Geräte"
+    as_of_year: 2025
+    description: "Aktive Android-Geräte weltweit"
+    source_url: "https://www.demandsage.com/android-statistics/"
+    source_date: 2026-06-21
+
+scale_comparison:
+  headline: "Mehr wert als Apple"
+  unit: "Mrd. USD"
+  rows:
+    - label: "Alphabet"
+      value: 4483
+      source_url: "https://companiesmarketcap.com/alphabet-google/marketcap/"
+      source_date: 2026-06-21
+    - label: "Apple"
+      value: 4376
+      source_url: "https://companiesmarketcap.com/apple/marketcap/"
+      source_date: 2026-06-21
+    - label: "Amazon"
+      value: 2628
+      source_url: "https://companiesmarketcap.com/amazon/marketcap/"
+      source_date: 2026-06-21
+
+researched_at: 2026-06-21
+verified: true
+verified_at: 2026-06-21
+verify_interval_days: 365

@@ -21,7 +21,8 @@ Projekt.
     <empire_scene_plan.json>` gegen die echte Nestlé-Episode: leere History → `pending_review`
     (`first_contact_requires_manual_review`); nach `record-post` → `auto_post`; künstlich
     `sources_verified=false` bzw. `qa.hard_fail=true` gesetzt → jeweils `pending_review`, auch mit
-    bereits vorhandenem Post in der History.
+    bereits vorhandenem Post in der History. Erstkontakt-Regel zusätzlich gegen frische Test-DBs
+    für LVMH und Toyota bestätigt — beide landen korrekt in `pending_review`.
   - `record-post` steht für die echte Posting-Integration ein (noch nicht gebaut, siehe unten) —
     erlaubt es aber, das Gate inkl. Erstkontakt-Logik schon jetzt end-to-end zu prüfen.
 - **chart_race-Hybrid-Gate** (`value_racer_distribution/gate.py: evaluate_chart_race_gate`) —

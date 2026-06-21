@@ -21,10 +21,12 @@ Brain-Code.
     `scene_plan.py`/`builder.py`/`cli.py`), liest kuratierte, quellenbelegte Konzern-Recherche aus
     `imperium/data/*.yaml` und baut daraus ein `EmpireScenePlan`. Einziger Live-Datenpunkt ist die
     Endcard-Aktienperformance (yfinance) — Marken/Fakten/Skalenvergleich kommen ausschließlich aus
-    der sourced YAML, da es dafür keine API gibt. Erste echte, recherchierte Episode (Nestlé)
-    läuft end-to-end durch (`python -m value_racer_brain.imperium.cli build --data
-    value_racer_brain/imperium/data/imperium_nestle.yaml --out <pfad>`), Status/Staleness aller
-    Episoden über `python -m value_racer_brain.imperium.cli research-status`.
+    der sourced YAML, da es dafür keine API gibt. Vier echte, recherchierte Episoden über
+    verschiedene Sektoren/Regionen laufen end-to-end durch (`python -m
+    value_racer_brain.imperium.cli build --data value_racer_brain/imperium/data/imperium_<id>.yaml
+    --out <pfad>`): Nestlé (`consumer_goods`/EU), LVMH (`luxury`/EU), Alphabet (`tech`/US), Toyota
+    (`automotive`/APAC). Status/Staleness aller Episoden über `python -m
+    value_racer_brain.imperium.cli research-status`.
 - [`renderer/`](renderer) — Remotion-Projekt mit zwei parallelen Compositions, beide ohne
   Geschäftslogik (reines Pixel-Malen aus dem jeweiligen JSON-Contract):
   - `ScenePlan` (chart_race, 1920×1080) — liest `ScenePlan`-JSON und rendert per `interpolate()`
@@ -34,10 +36,12 @@ Brain-Code.
   - `EmpireScenePlan` (imperium, 1080×1920) — liest `EmpireScenePlan`-JSON, sieben
     Phasen-Komponenten unter `src/components/imperium/` (Hook, Register-Karten-Cascade, Beat,
     Stempel-Reveal via `spring()`, Fakten-Karten, Skalenvergleich-Balken, Endcard). Verifiziert
-    per `npm run render:imperium` gegen die echte Nestlé-Episode (Typecheck clean, voller Render
-    630/630 Frames, alle sieben Phasen per `remotion still` visuell geprüft). Da kein
-    Original-HTML/CSS-Prototyp im Repo liegt, ist die Optik direkt aus dem
-    `EMPIRE_SCENE_PLAN.md`-Contract und den Design-Notizen abgeleitet, nicht 1:1 portiert.
+    per `npm run render:imperium` gegen alle vier echten Episoden (Nestlé, LVMH, Alphabet, Toyota:
+    Typecheck clean, voller Render 630/630 Frames, alle sieben Phasen per `remotion still` visuell
+    geprüft — u.a. lange Markennamen, zweizeilige Headlines, sehr große/dezimale
+    Skalenvergleichswerte, "Bio."- statt "Mrd."-Einheiten). Da kein Original-HTML/CSS-Prototyp im
+    Repo liegt, ist die Optik direkt aus dem `EMPIRE_SCENE_PLAN.md`-Contract und den
+    Design-Notizen abgeleitet, nicht 1:1 portiert.
 
 ## Geplant
 

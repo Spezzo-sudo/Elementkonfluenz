@@ -1,0 +1,129 @@
+# Imperium research episode — LVMH Moët Hennessy Louis Vuitton
+# Every numeric/historical claim below carries source_url + source_date.
+# Researched via live web search on 2026-06-21; re-verify before reuse if `verified_at` is
+# older than `verify_interval_days`. Note: Fenty Beauty (LVMH/Rihanna 50-50 joint venture) was
+# deliberately excluded as a candidate brand — LVMH was reported (Oct 2025) to be exploring a
+# sale of its stake, not yet confirmed as of researched_at, but too volatile to commit to a
+# verify_interval of a year. Benefit Cosmetics was used instead (stable ownership since 1999).
+
+topic_id: imperium_lvmh
+sector: luxury
+region: EU
+
+owner:
+  display_name: "LVMH"
+  legal_name: "LVMH Moët Hennessy Louis Vuitton SE"
+  hq_city: "Paris, Frankreich"
+  founded_year: 1987
+  ticker: "MC.PA"
+
+brands:
+  - name: "Louis Vuitton"
+    category: "Mode & Leder"
+    acquired_year: 1987
+    color_primary: "#3C2414"
+    color_text: "#D4AF37"
+    surprise_factor: 1
+    source_url: "https://en.wikipedia.org/wiki/Louis_Vuitton"
+    source_date: 2026-06-21
+  - name: "Moët & Chandon"
+    category: "Champagner"
+    acquired_year: 1987
+    color_primary: "#0B3D2E"
+    color_text: "#FFFFFF"
+    surprise_factor: 2
+    source_url: "https://en.wikipedia.org/wiki/Mo%C3%ABt_%26_Chandon"
+    source_date: 2026-06-21
+  - name: "Dior"
+    category: "Mode"
+    acquired_year: 2017
+    color_primary: "#1A1A1A"
+    color_text: "#FFFFFF"
+    surprise_factor: 3
+    source_url: "https://en.wikipedia.org/wiki/Dior"
+    source_date: 2026-06-21
+  - name: "Bulgari"
+    category: "Schmuck & Uhren"
+    acquired_year: 2011
+    color_primary: "#8B0000"
+    color_text: "#FFFFFF"
+    surprise_factor: 5
+    source_url: "https://en.wikipedia.org/wiki/Bulgari"
+    source_date: 2026-06-21
+  - name: "TAG Heuer"
+    category: "Uhren"
+    acquired_year: 1999
+    color_primary: "#CC0000"
+    color_text: "#FFFFFF"
+    surprise_factor: 6
+    source_url: "https://en.wikipedia.org/wiki/TAG_Heuer"
+    source_date: 2026-06-21
+  - name: "Tiffany & Co."
+    category: "Schmuck"
+    acquired_year: 2021
+    color_primary: "#0ABAB5"
+    color_text: "#000000"
+    surprise_factor: 7
+    source_url: "https://en.wikipedia.org/wiki/Tiffany_%26_Co."
+    source_date: 2026-06-21
+  - name: "Sephora"
+    category: "Kosmetik-Handel"
+    acquired_year: 1997
+    color_primary: "#000000"
+    color_text: "#FFFFFF"
+    surprise_factor: 8
+    source_url: "https://en.wikipedia.org/wiki/Sephora"
+    source_date: 2026-06-21
+  - name: "Benefit Cosmetics"
+    category: "Kosmetik"
+    acquired_year: 1999
+    color_primary: "#E91E63"
+    color_text: "#FFFFFF"
+    surprise_factor: 9
+    source_url: "https://en.wikipedia.org/wiki/Benefit_Cosmetics"
+    source_date: 2026-06-21
+
+facts:
+  - label: "UMSATZ"
+    value: 84.7
+    unit: "Mrd. EUR"
+    as_of_year: 2024
+    description: "Konzernumsatz Geschäftsjahr 2024"
+    source_url: "https://www.thefashionlaw.com/lvmh-reports-2024-results/"
+    source_date: 2026-06-21
+  - label: "MITARBEITER"
+    value: 215000
+    unit: "Mitarbeiter"
+    as_of_year: 2024
+    description: "Beschäftigte weltweit"
+    source_url: "https://en.wikipedia.org/wiki/LVMH"
+    source_date: 2026-06-21
+  - label: "GESCHAEFTE"
+    value: 6280
+    unit: "Boutiquen"
+    as_of_year: 2025
+    description: "Eigene Boutiquen weltweit"
+    source_url: "https://en.wikipedia.org/wiki/LVMH"
+    source_date: 2026-06-21
+
+scale_comparison:
+  headline: "Mehr wert als Hermès und Kering zusammen"
+  unit: "Mrd. USD"
+  rows:
+    - label: "LVMH"
+      value: 282.84
+      source_url: "https://companiesmarketcap.com/lvmh/marketcap/"
+      source_date: 2026-06-21
+    - label: "Hermès"
+      value: 206.96
+      source_url: "https://companiesmarketcap.com/hermes/marketcap/"
+      source_date: 2026-06-21
+    - label: "Kering"
+      value: 38.27
+      source_url: "https://companiesmarketcap.com/kering/marketcap/"
+      source_date: 2026-06-21
+
+researched_at: 2026-06-21
+verified: true
+verified_at: 2026-06-21
+verify_interval_days: 365
