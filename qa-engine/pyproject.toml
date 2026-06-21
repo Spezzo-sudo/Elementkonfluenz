@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "qa_engine"
+version = "0.1.0"
+description = "Basic dry-run QA gates for ValueRacer run folders."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+valueracer-qa = "qa_engine.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["qa_engine"]
