@@ -2,7 +2,7 @@
 
 Stand: 2026-06-21
 
-Dieses Dokument beschreibt den spaeteren YouTube-Publishing-Vertrag fuer Elementkonfluenz. Es ist bewusst eine Spezifikation, kein Upload-Code. Die spaetere Implementierung muss sich daran halten, damit Hermes sicher, nachvollziehbar und ohne Datenverlust arbeiten kann.
+Dieses Dokument beschreibt den spaeteren YouTube-Publishing-Vertrag fuer **ValueRacer**. Es ist bewusst eine Spezifikation, kein Upload-Code. Die spaetere Implementierung muss sich daran halten, damit Hermes sicher, nachvollziehbar und ohne Datenverlust arbeiten kann.
 
 ## Offizielle Doku-Basis
 
@@ -43,7 +43,7 @@ Die YouTube-Schicht soll spaeter diese Schritte unterstuetzen:
 - `status.selfDeclaredMadeForKids`
 - `status.containsSyntheticMedia`
 
-Wichtig: Laut YouTube werden Uploads ueber unverifizierte API-Projekte, die nach dem 28. Juli 2020 erstellt wurden, auf private Sichtbarkeit beschraenkt, bis das API-Projekt ein Audit bestanden hat. Deshalb darf Elementkonfluenz nie davon ausgehen, dass ein API-Upload sofort oeffentlich werden kann.
+Wichtig: Laut YouTube werden Uploads ueber unverifizierte API-Projekte, die nach dem 28. Juli 2020 erstellt wurden, auf private Sichtbarkeit beschraenkt, bis das API-Projekt ein Audit bestanden hat. Deshalb darf ValueRacer nie davon ausgehen, dass ein API-Upload sofort oeffentlich werden kann.
 
 ### Resumable Uploads
 
@@ -75,7 +75,7 @@ YouTube Captions koennen ueber API gelistet, eingefuegt, aktualisiert, herunterg
 
 Contract-Regel:
 
-- Elementkonfluenz soll eigene `.srt` oder `.vtt` mit Timing erzeugen.
+- ValueRacer soll eigene `.srt` oder `.vtt` mit Timing erzeugen.
 - Keine Abhaengigkeit auf API-Auto-Sync.
 - Captions bleiben bei Fehlern nicht stillschweigend weg, sondern erzeugen Warnung und Review-Pflicht.
 
@@ -206,7 +206,7 @@ Empfohlene Fehlercodes:
 
 ## Secrets und Environment
 
-Keine YouTube Secrets im Repo.
+Keine YouTube Secrets im Repo. Vorhandene VPS-/Hermes-Secrets sollen gelesen werden, nicht neu erzeugt oder ueberschrieben.
 
 Vorgesehene Environment-Variablen:
 
@@ -217,6 +217,13 @@ YOUTUBE_REFRESH_TOKEN
 YOUTUBE_CHANNEL_ID
 YOUTUBE_DEFAULT_PRIVACY_STATUS=private
 YOUTUBE_DRY_RUN=true
+```
+
+ValueRacer-spezifische Steuerung:
+
+```text
+VALUERACER_DRY_RUN=true
+VALUERACER_RUNS_DIR=/srv/valueracer/runs
 ```
 
 ## Nicht-Ziele dieses Contracts
