@@ -1,0 +1,71 @@
+{
+  "contract_version": "0.1",
+  "updated_at": "2026-06-21",
+  "topics": [
+    {
+      "topic_slug": "gold-vs-sp500",
+      "title": "Gold vs S&P 500",
+      "video_type": "market_race",
+      "template": "bar_race",
+      "assets": ["gold", "sp500"],
+      "asset_labels": ["Gold", "S&P 500"],
+      "keywords": ["gold", "sp500", "stocks", "safe haven", "market comparison"],
+      "content_angle": "comparison",
+      "risk_level": "medium",
+      "default_period_days": 1825,
+      "priority": 100
+    },
+    {
+      "topic_slug": "nasdaq-vs-dow",
+      "title": "Nasdaq vs Dow",
+      "video_type": "market_race",
+      "template": "line_race",
+      "assets": ["nasdaq", "dow"],
+      "asset_labels": ["Nasdaq", "Dow Jones"],
+      "keywords": ["nasdaq", "dow", "tech", "blue chips", "market comparison"],
+      "content_angle": "comparison",
+      "risk_level": "medium",
+      "default_period_days": 1825,
+      "priority": 90
+    },
+    {
+      "topic_slug": "bitcoin-vs-tech",
+      "title": "Bitcoin vs Tech Stocks",
+      "video_type": "market_race",
+      "template": "line_race",
+      "assets": ["bitcoin", "nasdaq"],
+      "asset_labels": ["Bitcoin", "Nasdaq"],
+      "keywords": ["bitcoin", "tech stocks", "nasdaq", "risk assets", "volatility"],
+      "content_angle": "comparison",
+      "risk_level": "high",
+      "default_period_days": 1825,
+      "priority": 80
+    },
+    {
+      "topic_slug": "oil-vs-inflation",
+      "title": "Oil vs Inflation",
+      "video_type": "trend_explainer",
+      "template": "chart_explainer",
+      "assets": ["oil", "inflation"],
+      "asset_labels": ["Oil", "Inflation"],
+      "keywords": ["oil", "inflation", "energy", "prices", "macro"],
+      "content_angle": "explainer",
+      "risk_level": "medium",
+      "default_period_days": 1095,
+      "priority": 70
+    },
+    {
+      "topic_slug": "dollar-index-vs-gold",
+      "title": "Dollar Index vs Gold",
+      "video_type": "macro_snapshot",
+      "template": "split_chart",
+      "assets": ["dxy", "gold"],
+      "asset_labels": ["Dollar Index", "Gold"],
+      "keywords": ["dollar", "dxy", "gold", "currency", "macro"],
+      "content_angle": "macro_snapshot",
+      "risk_level": "medium",
+      "default_period_days": 1095,
+      "priority": 60
+    }
+  ]
+}
