@@ -104,6 +104,38 @@ jobs:
           test -f runs/ci-seo-dry-run/metadata/youtube.json
           test -f runs/ci-seo-dry-run/publish/youtube_publish_plan.json
 
+  orchestrator-youtube-seo-integration:
+    name: Orchestrator with YouTube SEO dry-run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            orchestrator/pyproject.toml
+            seo-engine/pyproject.toml
+
+      - name: Install packages
+        run: |
+          python -m pip install -e orchestrator
+          python -m pip install -e seo-engine
+
+      - name: Create full dry-run job
+        run: python -m valueracer_orchestrator.cli --dry-run --with-youtube-seo --topic "Gold vs S&P 500" --out runs/ci-full-dry-run
+
+      - name: Verify integrated artifacts
+        run: |
+          test -f runs/ci-full-dry-run/topic_brief.json
+          test -f runs/ci-full-dry-run/sources.json
+          test -f runs/ci-full-dry-run/metadata/youtube.json
+          test -f runs/ci-full-dry-run/publish/youtube_publish_plan.json
+          test -f runs/ci-full-dry-run/job_result.json
+
   renderer-typecheck:
     name: Remotion renderer typecheck
     runs-on: ubuntu-latest

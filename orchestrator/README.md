@@ -44,10 +44,41 @@ Erwartete Ausgabe:
     └── orchestrator.log
 ```
 
+## Mit YouTube SEO Dry-Run
+
+Wenn `seo-engine` installiert ist, kann Hermes in einem Schritt auch YouTube-Metadaten und einen privaten Publish-Plan erzeugen:
+
+```bash
+python -m valueracer_orchestrator.cli \
+  --dry-run \
+  --with-youtube-seo \
+  --topic "Gold vs S&P 500" \
+  --out ../runs/test-gold-sp500
+```
+
+Dann entstehen zusaetzlich:
+
+```text
+../runs/test-gold-sp500/
+├── metadata/
+│   └── youtube.json
+└── publish/
+    └── youtube_publish_plan.json
+```
+
+Sicherheitsregeln bleiben unveraendert:
+
+- keine YouTube API Calls
+- keine Google Ads API Calls
+- keine Secrets
+- `privacy_status = private`
+- `requires_review = true`
+- `ready_to_publish = false`
+
 ## Legacy-Hinweis
 
 Die interne Implementierung kann fuer eine Uebergangsphase noch den alten Paketnamen `elementkonfluenz_orchestrator` enthalten. Neue Aufrufe sollen aber `valueracer_orchestrator` oder `valueracer-orchestrator` verwenden.
 
 ## Wichtig
 
-Dieser erste Orchestrator ruft bewusst noch keine Trend Engine, keine yfinance-Daten, keinen Renderer und keine Distribution auf. Er ist ein sicherer Contract-Smoke-Test fuer Hermes.
+Dieser erste Orchestrator ruft bewusst noch keine Trend Engine, keine yfinance-Daten, keinen Renderer und keine Distribution auf. YouTube SEO ist nur ein lokaler Dry-Run-Artefaktgenerator und postet nichts.
