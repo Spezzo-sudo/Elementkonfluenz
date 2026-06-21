@@ -1,0 +1,72 @@
+{
+  "title": "Elementkonfluenz Job Result",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "job_id",
+    "ok",
+    "stage",
+    "requires_review",
+    "ready_to_publish",
+    "artifacts",
+    "warnings"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "default": "0.1"
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "trend",
+        "brain",
+        "renderer",
+        "seo",
+        "distribution",
+        "orchestrator"
+      ]
+    },
+    "requires_review": {
+      "type": "boolean"
+    },
+    "ready_to_publish": {
+      "type": "boolean"
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "error_code": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stage_results": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

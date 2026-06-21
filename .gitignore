@@ -1,0 +1,20 @@
+# Generated Hermes/production run artifacts
+runs/*
+!runs/.gitkeep
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Python caches
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node caches and outputs
+node_modules/
+dist/
+build/
+out/

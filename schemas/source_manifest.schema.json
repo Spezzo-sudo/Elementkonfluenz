@@ -1,0 +1,75 @@
+{
+  "title": "Elementkonfluenz Source Manifest",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "job_id",
+    "generated_at",
+    "sources"
+  ],
+  "properties": {
+    "contract_version": {
+      "type": "string",
+      "default": "0.1"
+    },
+    "job_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "source_type", "name"],
+        "properties": {
+          "source_id": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "market_data",
+              "macro_data",
+              "news",
+              "rss",
+              "manual_note",
+              "other"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "retrieved_at": {
+            "type": "string"
+          },
+          "period_start": {
+            "type": "string"
+          },
+          "period_end": {
+            "type": "string"
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
