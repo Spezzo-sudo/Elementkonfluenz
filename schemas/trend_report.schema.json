@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ValueRacer Trend Report",
+  "type": "object",
+  "required": ["contract_version", "job_id", "run_mode", "generated_at", "mode", "research_window", "candidate_count", "requires_review", "ready_to_publish"],
+  "properties": {
+    "contract_version": {"type": "string"},
+    "job_id": {"type": "string"},
+    "run_mode": {"const": "trend_scan"},
+    "generated_at": {"type": "string"},
+    "mode": {"const": "dry_run"},
+    "research_window": {"type": "string"},
+    "candidate_count": {"type": "integer", "minimum": 0},
+    "top_candidate_slugs": {"type": "array", "items": {"type": "string"}},
+    "requires_review": {"const": true},
+    "ready_to_publish": {"const": false},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
