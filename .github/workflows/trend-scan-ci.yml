@@ -1,0 +1,87 @@
+name: ValueRacer Trend Scan CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: trend-scan-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  orchestrator-trend-scan-smoke-test:
+    name: Orchestrator trend_scan with SEO and QA
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            orchestrator/pyproject.toml
+            trend-engine/pyproject.toml
+            seo-engine/pyproject.toml
+            qa-engine/pyproject.toml
+
+      - name: Install packages
+        run: |
+          python -m pip install -e orchestrator
+          python -m pip install -e trend-engine
+          python -m pip install -e seo-engine
+          python -m pip install -e qa-engine
+
+      - name: Create trend-scan QA-gated dry-run job
+        run: |
+          python -m valueracer_orchestrator.cli \
+            --dry-run \
+            --run-mode trend_scan \
+            --with-youtube-seo \
+            --with-qa \
+            --out runs/ci-trend-scan-full
+
+      - name: Verify trend-scan artifacts
+        run: |
+          test -f runs/ci-trend-scan-full/trend_report.json
+          test -f runs/ci-trend-scan-full/scored_candidates.json
+          test -f runs/ci-trend-scan-full/topic_brief.json
+          test -f runs/ci-trend-scan-full/sources.json
+          test -f runs/ci-trend-scan-full/metadata/youtube.json
+          test -f runs/ci-trend-scan-full/publish/youtube_publish_plan.json
+          test -f runs/ci-trend-scan-full/qa.json
+          test -f runs/ci-trend-scan-full/job_result.json
+          test -f runs/ci-trend-scan-full/logs/orchestrator.log
+
+      - name: Verify trend-scan JSON status
+        run: |
+          python - <<'PY'
+          import json
+          topic = json.load(open('runs/ci-trend-scan-full/topic_brief.json', encoding='utf-8'))
+          qa = json.load(open('runs/ci-trend-scan-full/qa.json', encoding='utf-8'))
+          job = json.load(open('runs/ci-trend-scan-full/job_result.json', encoding='utf-8'))
+          report = json.load(open('runs/ci-trend-scan-full/trend_report.json', encoding='utf-8'))
+          candidates = json.load(open('runs/ci-trend-scan-full/scored_candidates.json', encoding='utf-8'))
+          assert topic['run_mode'] == 'trend_scan'
+          assert topic['requires_review'] is True
+          assert topic['ready_to_publish'] is False
+          assert report['run_mode'] == 'trend_scan'
+          assert report['requires_review'] is True
+          assert report['ready_to_publish'] is False
+          assert isinstance(candidates, list)
+          assert len(candidates) >= 1
+          assert qa['ok'] is True
+          assert qa['hard_fail'] is False
+          assert job['ok'] is True
+          assert 'trend_report.json' in job['artifacts']
+          assert 'scored_candidates.json' in job['artifacts']
+          assert 'qa.json' in job['artifacts']
+          assert job['requires_review'] is True
+          assert job['ready_to_publish'] is False
+          PY
