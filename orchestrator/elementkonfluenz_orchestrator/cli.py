@@ -19,8 +19,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--run-mode",
         default="manual_topic",
-        choices=["manual_topic", "market_scan"],
-        help="Run mode. manual_topic uses --topic; market_scan selects from the trend-engine catalog.",
+        choices=["manual_topic", "market_scan", "trend_scan"],
+        help="Run mode. manual_topic uses --topic; market_scan selects from the catalog; trend_scan selects from simulated prepublish research.",
     )
     parser.add_argument("--topic", required=False, help="Human-readable topic title, e.g. 'Gold vs S&P 500'. Required for manual_topic.")
     parser.add_argument("--out", required=False, help="Output run directory. Defaults to runs/<generated-job-id>.")
@@ -28,15 +28,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--locale", default="de", help="Topic locale. Defaults to de.")
     parser.add_argument("--period-days", type=int, default=1825, help="Lookback period placeholder for manual_topic topic briefs.")
     parser.add_argument("--dry-run", action="store_true", help="Required safety flag. No publish-capable mode exists yet.")
-    parser.add_argument("--history", default=None, help="History JSONL path for market_scan/QA. Defaults to <runs-dir>/history.jsonl.")
-    parser.add_argument("--cooldown-days", type=int, default=14, help="Topic cooldown in days for market_scan.")
-    parser.add_argument("--asset-pair-cooldown-days", type=int, default=21, help="Asset-pair cooldown in days for market_scan.")
+    parser.add_argument("--history", default=None, help="History JSONL path for scan modes/QA. Defaults to <runs-dir>/history.jsonl.")
+    parser.add_argument("--cooldown-days", type=int, default=14, help="Topic cooldown in days for scan modes.")
+    parser.add_argument("--asset-pair-cooldown-days", type=int, default=21, help="Asset-pair cooldown in days for scan modes.")
     parser.add_argument("--max-same-video-type-in-row", type=int, default=2, help="Consecutive video-type limit for market_scan.")
     parser.add_argument("--max-same-template-in-row", type=int, default=2, help="Consecutive template limit for market_scan.")
     parser.add_argument(
         "--skip-history-write",
         action="store_true",
-        help="Do not append the selected market_scan topic to history. Useful for throwaway tests.",
+        help="Do not append the selected scan topic to history. Useful for throwaway tests.",
     )
     parser.add_argument(
         "--with-youtube-seo",
@@ -198,6 +198,13 @@ def run_market_scan_dry_run(args: argparse.Namespace, *, out_dir: Path, job_id: 
     return result
 
 
+def run_trend_scan_dry_run(args: argparse.Namespace, *, out_dir: Path, job_id: str) -> JobResult:
+    """Select a topic via trend-engine research and create the initial run folder."""
+    from .trend_scan import run_trend_scan_dry_run as run_helper
+
+    return run_helper(args, out_dir=out_dir, job_id=job_id, history_path=resolve_history_path(args, out_dir))
+
+
 def validate_args(args: argparse.Namespace) -> list[str]:
     errors: list[str] = []
     if not args.dry_run:
@@ -249,8 +256,10 @@ def main(argv: list[str] | None = None) -> int:
                 locale=args.locale,
                 period_days=args.period_days,
             )
-        else:
+        elif args.run_mode == "market_scan":
             result = run_market_scan_dry_run(args, out_dir=out_dir, job_id=job_id)
+        else:
+            result = run_trend_scan_dry_run(args, out_dir=out_dir, job_id=job_id)
 
         if args.with_youtube_seo and result.ok:
             seo_result = run_youtube_seo_dry_run(out_dir)
@@ -285,8 +294,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.with_youtube_seo and exc.name and exc.name.startswith("valueracer_seo"):
             print("error: --with-youtube-seo requires the seo-engine package to be installed", file=sys.stderr)
             return 2
-        if args.run_mode == "market_scan" and exc.name and exc.name.startswith("trend_engine"):
-            print("error: --run-mode market_scan requires the trend-engine package to be installed", file=sys.stderr)
+        if args.run_mode in {"market_scan", "trend_scan"} and exc.name and exc.name.startswith("trend_engine"):
+            print("error: scan run modes require the trend-engine package to be installed", file=sys.stderr)
             return 2
         if args.with_qa and exc.name and exc.name.startswith("qa_engine"):
             print("error: --with-qa requires the qa-engine package to be installed", file=sys.stderr)
