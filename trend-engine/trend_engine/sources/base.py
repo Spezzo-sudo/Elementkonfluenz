@@ -1,12 +1,12 @@
-from __future__ import annotations
-
-from typing import Protocol
-
 from .item import SourceItem
 
 
-class SourceAdapter(Protocol):
-    source_id: str
+class SourceAdapter:
+    source_id = "base"
 
-    def collect(self) -> list[SourceItem]:
-        ...
+    def collect(self):
+        return []
+
+
+TrendSignal = SourceItem
+TrendSource = SourceAdapter
